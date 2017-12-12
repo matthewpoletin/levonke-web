@@ -1,20 +1,40 @@
 const rp = require('request-promise');
-
-function getOptions(apiUrl, path, params, body) {
-	return {
-		body,
-		json: true,
-		qs: params,
-		uri: apiUrl + path,
-	};
-}
+const getOptions = require('./../options');
 
 class componentService {
 
-	static async getComponentByUUID(uuid) {
-		const options = getOptions("http://localhost:8441/", "component", { uuid: uuid }, null);
-		const response = await rp.get(options);
-		return response;
+	static getComponents(page, size) {
+		const options = getOptions("http://localhost:8441/", "components", { page: page, size: size }, null);
+		return rp.get(options);
+	}
+
+	static createComponent(componentRequest) {
+		const options = getOptions("http://localhost:8441/", "components", componentRequest, null);
+		return rp.post(options);
+	}
+
+	static getComponentById(id) {
+		const options = getOptions("http://localhost:8441/", `components/${id}`, null, null);
+		return rp.get(options);
+	}
+
+	static getComponentByUUID(uuid) {
+		return new Promise((resolve, reject) => {
+			const options = getOptions("http://localhost:8441/", "component", { uuid: uuid }, null);
+			rp.get(options).then((response) => {
+				resolve(response)
+			})
+		})
+	}
+
+	static updateComponentById(id, componentRequest) {
+		const options = getOptions("http://localhost:8441/", `components/${id}`, { page: page, size: size }, null);
+		return rp.patch(options);
+	}
+
+	static deleteComponentById(id) {
+		const options = getOptions("http://localhost:8441/", `components/${id}`, { page: page, size: size }, null);
+		return rp.delete(options);
 	}
 
 }

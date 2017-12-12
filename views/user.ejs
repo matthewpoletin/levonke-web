@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <%- include('head', {}); %>
+    </head>
+    <body>
+        <%- include('header', {}); %>
+        <div class="content">
+            <% if (user) { %>
+            <img width="80px" height="80px" src="">
+            <p>Username: <%= user.username %></p>
+            <p>Name: <%= user.forename %></p>
+            <p>Surname: <%= user.surname %></p>
+            <p>Registration email: <%= user.regEmail %></p>
+            <p>Public email: <%= user.pubEmail %></p>
+            <% if (user.fbLink) { %>
+            <a href="http://<%= user.fbLink %>"><i class="fa-2x fab fa-facebook"></i></a>
+            <% } %>
+            <% if (user.ghLink) { %>
+            <a href="http://<%= user.ghLink %>"><i class="fa-2x fab fa-github"></i></a>
+            <% } %>
+            <!--<i class="fab fa-vk"></i>-->
+            <% } %>
+        </div>
+        <%- include('footer', {}); %>
+    </body>
+</html>

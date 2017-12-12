@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <%- include('head', {}); %>
+    </head>
+    <body>
+        <%- include('header', {}); %>
+        <div class="content">
+            <% if (manufacturer) { %>
+            <p>Name: <%= manufacturer.name %></p>
+            <p><s>Description: <%= manufacturer.description %></s></p>
+            <p>Website: <a href="http<%= manufacturer.website %>"><%= manufacturer.website %></a></p>
+
+            <div class="pure-menu pure-menu-horizontal submenu submenu-manufacturer">
+                <ul class="pure-menu-list">
+                    <li class="pure-menu-item"><a class="pure-menu-link" href="/manufacturer/<%= manufacturer.id %>/components"><i class="fas fa-microchip"></i>&nbspComponents</a></li>
+                    <li class="pure-menu-item"><a class="pure-menu-link" href="/manufacturer/<%= manufacturer.id %>/settings"><i class="fas fa-cog"></i>&nbspSettings</a></li>
+                </ul>
+            </div>
+            <!--TODO: add into css-->
+            <br>
+
+            <% if(pageType === "main") { %>
+
+            <% } %>
+
+            <% if(pageType === "components") { %>
+            <% if(components) { %>
+            <table class="pure-table" width="100%">
+
+                <thead>
+                <tr align="center">
+                    <th></th>
+                    <th>Manufacturer Part Number</th>
+                    <th>Type</th>
+                </tr>
+                </thead>
+                <tbody>
+                <% components.forEach((component, position) => { %>
+                <tr <% if (position % 2) { %>class="pure-table-odd"<% } %>>
+                    <td align="center"><img width="25px" height="25px" src=""></td>
+                    <td><a href="/component/<%= component.uuid %>"><%= component.manufacturerPartNumber %></a></td>
+                    <td align="center">*type*</td>
+                </tr>
+                <% }); %>
+                </tbody>
+            </table>
+            <% } %>
+            <% } %>
+
+            <% if(pageType === "settings") { %>
+            <form class="pure-form pure-form-stacked">
+                <fieldset>
+                    <legend>Settings</legend>
+
+                    <label for="name">Name</label>
+                    <input class="pure-input-1" id="name" type="text" placeholder="Name" value="<%=manufacturer.name%>" required>
+                    <span class="pure-form-message">This is a required field.</span>
+
+                    <label for="website">Website</label>
+                    <input id="website" class="pure-input-1" type="text" placeholder="Website" value="<%=manufacturer.website%>">
+
+                    <label for="password">Description</label>
+                    <s><textarea class="pure-input-1" id="description" placeholder="Description" style="resize: none"><%=manufacturer.description%></textarea></s>
+
+                    <button type="submit" class="pure-button pure-input-1 pure-button-primary">Save</button>
+                </fieldset>
+            </form>
+            <% } %>
+
+            <% } %>
+        </div>
+        <%- include('footer', {}); %>
+    </body>
+</html>

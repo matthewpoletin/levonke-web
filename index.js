@@ -1,10 +1,11 @@
 #!/usr/bin/env node
 
-const app = require('../app');
+const app = require('./app');
 const debug = require('debug')('levonke-web:server');
 const http = require('http');
+const config = require('./config');
 
-let port = normalizePort(process.env.PORT || '3000');
+let port = normalizePort(process.env.PORT || config.this.port);
 app.set('port', port);
 
 const server = http.createServer(app);

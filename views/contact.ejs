@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <%- include('head', {}); %>
+    </head>
+    <body>
+        <%- include('header', {}); %>
+        <div class="content">
+            <h2>CONTACT</h2>
+            <form class="pure-form">
+                <fieldset class="pure-group">
+                    <input type="text" class="pure-input-1-2" placeholder="Name">
+                    <input type="email" class="pure-input-1-2" placeholder="Email">
+                </fieldset>
+
+                <fieldset class="pure-group">
+                    <input type="text" class="pure-input-1-2" placeholder="A title">
+                    <textarea class="pure-input-1-2" placeholder="Your response"></textarea>
+                </fieldset>
+
+                <button type="submit" class="pure-button pure-input-1-2 pure-button-primary">Send</button>
+            </form>
+        </div>
+        <%- include('footer', {}); %>
+    </body>
+</html>

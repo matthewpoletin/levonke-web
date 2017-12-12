@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <%- include('head', {}); %>
+    </head>
+    <body>
+        <%- include('header', {}); %>
+        <div class="content">
+            <% if (user) { %>
+            <form class="pure-form pure-form-stacked">
+                <fieldset>
+
+                    <!--TODO: Add avatar of user support in DB-->
+                    <img width="80px" height="80px" src="">
+                    <label for="file">Choose image to upload</label>
+                    <input type="file" name="picField" id="picField" size="24" onchange="preview_2(this);" alt=""/>
+
+                    <label for="name">Username</label>
+                    <input id="name" type="text" placeholder="Username" value="<%=user.username%>">
+                    <span class="pure-form-message-inline">This is a required field.</span>
+
+                    <label for="regEmail">Email Address</label>
+                    <input id="regEmail" type="email" placeholder="Email Address" value="<%=user.regEmail%>">
+                    <span class="pure-form-message-inline">This is a required field.</span>
+
+                    <label for="name">Name</label>
+                    <input id="name" type="text" placeholder="Name" value="<%=user.forename%>">
+
+                    <label for="surname">Surname</label>
+                    <input id="surname" type="text" placeholder="Surname" value="<%=user.surname%>">
+
+                    <label for="pubEmail">Public email</label>
+                    <input id="pubEmail" type="email" placeholder="Public email" value="<%=user.pubEmail%>">
+
+                    <label for="password">Password</label>
+                    <input id="password" type="password" placeholder="Password" value="<%=user.password%>">
+                    <span class="pure-form-message-inline">This is a required field.</span><br>
+
+                    <button type="submit" class="pure-button pure-input-1-2 pure-button-primary">Submit</button>
+                </fieldset>
+            </form>
+
+            <!--<% if (user.fbLink) { %>-->
+            <!--<a href="http://<%= user.fbLink %>"><i class="fa-2x fab fa-facebook"></i></a>-->
+            <!--<% } %>-->
+            <!--<% if (user.ghLink) { %>-->
+            <!--<a href="http://<%= user.ghLink %>"><i class="fa-2x fab fa-github"></i></a>-->
+            <!--<% } %>-->
+            <!--<i class="fab fa-vk"></i>-->
+            <% } %>
+        </div>
+        <%- include('footer', {}); %>
+    </body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+    <head>
+    </head>
+    <html>
+        <%- include('head', {}); %>
+    <body>
+        <%- include('header', {}); %>
+        <div class="content">
+            <form class="pure-form">
+                <input type="text" class="pure-input-rounded pure-input-1-2" placeholder="Search">
+            </form>
+            <!--TODO: add padding in css-->
+            <br>
+            <div class="pure-menu pure-menu-horizontal organization-submenu">
+                <ul class="pure-menu-list">
+                    <li class="pure-menu-item"><a class="pure-menu-link" href="/search?type=projects&q=<%="vostra"%>"><i class="fas fa-book"></i>&nbspProjects</a></li>
+                    <li class="pure-menu-item"><a class="pure-menu-link" href="/search?type=teams&q=<%="vostra"%>"><i class="fas fa-users"></i>&nbspTeams</a></li>
+                    <li class="pure-menu-item"><a class="pure-menu-link" href="/search?type=organizations&q=<%="vostra"%>"><i class="fas fa-building"></i>&nbspOrganizations</a></li>
+                    <li class="pure-menu-item"><a class="pure-menu-link" href="/search?type=users&q=<%="vostra"%>"><i class="fas fa-user"></i>&nbspUsers</a></li>
+                    <li class="pure-menu-item"><a class="pure-menu-link" href="/search?type=manufacturers&q=<%="vostra"%>"><i class="fas fa-industry"></i>&nbspManufacturers</a></li>
+                </ul>
+            </div>
+            <!--TODO: add padding in css-->
+            <br>
+
+            <% if (pageType === "projects") { %>
+
+            <% } %>
+
+            <% if (pageType === "teams") { %>
+
+            <% } %>
+
+            <% if (pageType === "organization") { %>
+
+            <% } %>
+
+            <% if (pageType === "users") { %>
+
+            <% } %>
+
+            <% if (pageType === "manufacturers") { %>
+
+            <% } %>
+
+        </div>
+        <%- include('footer', {}); %>
+    </body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <%- include('head', {}); %>
+    </head>
+    <body>
+        <%- include('header', {}); %>
+        <div class="content">
+            <% if (organizations) { %>
+            <ul>
+                <% organizations.forEach(function(organization) { %>
+                <li>
+                    Name: <a href="http://localhost:3000/organization/<%= organization.id %>"><%= organization.name %></a><br>
+                    Description: <%= organization.description %><br>
+                    <% if (organization.owner) { %>
+                    Owner: <a href="/user<%= owner.username %>"><%= organization.owner.username %></a><br>
+                    <% } %>
+                </li>
+                <% }); %>
+            </ul>
+            <% } else { %>
+            <p>Couldn't load any organizations data</p>
+            <% } %>
+        </div>
+        <%- include('footer', {}); %>
+    </body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <%- include('head', {}); %>
+    </head>
+    <body>
+        <%- include('header', {}); %>
+        <div class="content">
+            <% if (team) { %>
+            Name: <%= team.name %><br>
+            <% } %>
+            <% if (organization) { %>
+            Organization: <a href="/organization/<%= organization.id %>"><%= organization.name %></a><br>
+            <% } %>
+            <% if (users) { %>
+            <ul>
+                <lh>Members:</lh>
+                <% users.forEach((user) => { %>
+                <li>
+                    <a href="/user/<%= user.username %>"><%= user.username %></a>
+                </li>
+                <% }) %>
+            </ul>
+            <% } %>
+            <% if (projects) { %>
+            <ul>
+                <lh>Projects:</lh>
+                <% projects.forEach((project) => { %>
+                <li>
+                    <a href="/projects/<%= project.id %>"><%= project.name %></a>
+                </li>
+                <% }) %>
+            </ul>
+            <% } %>
+        </div>
+        <%- include('footer', {}); %>
+    </body>
+</html>
