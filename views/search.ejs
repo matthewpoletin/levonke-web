@@ -6,18 +6,19 @@
     <body>
         <%- include('header', {}); %>
         <div class="content">
-            <form class="pure-form">
-                <input type="text" class="pure-input-rounded pure-input-1-2" placeholder="Search">
+            <!--TODO: force saving current search type-->
+            <form class="pure-form" accept-charset="UTF-8" method="get" action="/search?type=users">
+                <input name="q" type="text" class="pure-input-rounded pure-input-1-2" placeholder="Search" value="<%=query%>">
             </form>
             <!--TODO: add padding in css-->
             <br>
             <div class="pure-menu pure-menu-horizontal organization-submenu">
                 <ul class="pure-menu-list">
-                    <li class="pure-menu-item"><a class="pure-menu-link" href="/search?type=projects&q=<%="vostra"%>"><i class="fas fa-book"></i>&nbspProjects</a></li>
-                    <li class="pure-menu-item"><a class="pure-menu-link" href="/search?type=teams&q=<%="vostra"%>"><i class="fas fa-users"></i>&nbspTeams</a></li>
-                    <li class="pure-menu-item"><a class="pure-menu-link" href="/search?type=organizations&q=<%="vostra"%>"><i class="fas fa-building"></i>&nbspOrganizations</a></li>
-                    <li class="pure-menu-item"><a class="pure-menu-link" href="/search?type=users&q=<%="vostra"%>"><i class="fas fa-user"></i>&nbspUsers</a></li>
-                    <li class="pure-menu-item"><a class="pure-menu-link" href="/search?type=manufacturers&q=<%="vostra"%>"><i class="fas fa-industry"></i>&nbspManufacturers</a></li>
+                    <li class="pure-menu-item"><a class="pure-menu-link" href="/search?type=projects&q=<%=query%>"><i class="fas fa-book"></i>&nbsp;Projects</a></li>
+                    <li class="pure-menu-item"><a class="pure-menu-link" href="/search?type=teams&q=<%=query%>"><i class="fas fa-users"></i>&nbsp;Teams</a></li>
+                    <li class="pure-menu-item"><a class="pure-menu-link" href="/search?type=organizations&q=<%=query%>"><i class="fas fa-building"></i>&nbsp;Organizations</a></li>
+                    <li class="pure-menu-item"><a class="pure-menu-link" href="/search?type=users&q=<%=query%>"><i class="fas fa-user"></i>&nbsp;Users</a></li>
+                    <li class="pure-menu-item"><a class="pure-menu-link" href="/search?type=manufacturers&q=<%=query%>"><i class="fas fa-industry"></i>&nbsp;Manufacturers</a></li>
                 </ul>
             </div>
             <!--TODO: add padding in css-->
@@ -36,7 +37,16 @@
             <% } %>
 
             <% if (pageType === "users") { %>
-
+            <% if(users !== null) { %>
+            <ul>
+            <% users.forEach((user) => { %>
+                <div class="pure-g">
+                    <div class="pure-u-1-3"><img width="25px" height="25px" src="" style="background-color: #aaaaaa"></div>
+                    <div class="pure-u-2-3"><a href="/user/<%=user.username%>"><%=user.username%></a></div>
+                </div>
+            <% }); %>
+            </ul>
+            <% } %>
             <% } %>
 
             <% if (pageType === "manufacturers") { %>

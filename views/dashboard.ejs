@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <%- include('head', {}); %>
+    </head>
+    <body>
+        <%- include('header', {}); %>
+        <div class="content">
+            <div class="pure-g">
+                <div class="pure-u-2-3">
+                    <div class="pure-menu pure-menu-horizontal organization-submenu">
+                        <ul class="pure-menu-list">
+                            <li class="pure-menu-item"><a class="pure-menu-link" href="/">Activity</a></li>
+                            <li class="pure-menu-item"><a class="pure-menu-link" href="/dashboard/discover">Recommendations</a></li>
+                        </ul>
+                    </div>
+                    <!--TODO: add padding in css-->
+                    <br>
+
+                    <% if(pageType == "main") { %>
+                    <div>
+                        <div class="pure-g">
+                            <div class="pure-u-2-3 info">
+                                <s>Some info about new updates in your favorite projects</s>
+                            </div>
+                            <div class="pure-u-1-3 time" align="right">
+                                9 hours ago<br>
+                            </div>
+                        </div>
+                        <hr class="pure-u-1">
+                    </div>
+                    <div>
+                        <div class="pure-g">
+                            <div class="pure-u-2-3">
+                                <s>Some info about new updates in your favorite projects</s>
+                            </div>
+                            <div class="pure-u-1-3" align="right">
+                                1 day ago
+                            </div>
+                        </div>
+                        <hr class="pure-u-1">
+                    </div>
+                    <% } %>
+
+                    <% if (pageType === "discover") { %>
+                    <h3><s>projectName</s></h3>
+                    <p><s>"Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?"</s></p>
+                    <h3><s>projectName</s></h3>
+                    <p><s>"Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?"</s></p>
+                    <% } %>
+
+                </div>
+                <div class="pure-u-1-3">
+                    <div>
+                        <h3>Projects you contribute to</h3>
+                        <ul>
+                            <li><i class="fas fa-book"></i>&nbsp;<s><a href="#">projectName</a></s></li>
+                            <li><i class="fas fa-book"></i>&nbsp;<s><a href="#">projectName</a></s></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3>Your projects</h3>
+                        <ul>
+                            <li><i class="fas fa-book"></i>&nbsp;<s><a href="#">projectName</a></s></li>
+                            <li><i class="fas fa-book"></i>&nbsp;<s><a href="#">projectName</a></s></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <%- include('footer', {}); %>
+    </body>
+</html>

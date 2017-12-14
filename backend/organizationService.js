@@ -9,7 +9,7 @@ class organizationService {
 	}
 
 	static createOrganization(componentRequest) {
-		const options = getOptions("http://localhost:8441/", `organizations`, componentRequest, null);
+		const options = getOptions("http://localhost:8441/", `organizations`, null, componentRequest);
 		return rp.post(options);
 	}
 

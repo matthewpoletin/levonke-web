@@ -9,7 +9,7 @@ class manufacturerService {
 	}
 
 	static createManufacturer(componentRequest) {
-		const options = getOptions("http://localhost:8441/", `manufacturers`, componentRequest, null);
+		const options = getOptions("http://localhost:8441/", `manufacturers`, null, componentRequest);
 		return rp.post(options);
 	}
 

@@ -4,6 +4,9 @@ const config = require('./../config');
 const componentService = require('./../backend/componentService');
 const manufacturerService = require('./../backend/manufacturerService');
 
+/**
+ * Render component page
+ */
 router.get('/:uuid', async (req, res, next) => {
 	const data = {
 		projectName: config.project.name,
@@ -17,13 +20,21 @@ router.get('/:uuid', async (req, res, next) => {
 		// TODO: fix loading without manufacturerId set
 		if (componentResponse.manufacturerId !== undefined) {
 			const manufacturerId = parseInt(componentResponse.manufacturerId, 10);
-			const manufacturerResponse = await manufacturerService.getManufacturerById(manufacturerId);
-			data.manufacturer = manufacturerResponse;
+			try {
+				const manufacturerResponse = await manufacturerService.getManufacturerById(manufacturerId);
+				if (manufacturerResponse) data.manufacturer = manufacturerResponse;
+				else data.manufacturer = undefined;
+			}
+			catch (error) {
+				// TODO: log error about that
+				console.log("Error");
+			}
 		} else {
-			data.manufacturer = undefined;
 			// TODO: log error about that
+			console.log("Error");
 		}
 	} catch (error) {
+		// TODO: log error about that
 		console.log("Error");
 	}
 	res.render('component', data);

@@ -9,7 +9,7 @@ class projectService {
 	}
 
 	static createProject(projectRequest) {
-		const options = getOptions("http://localhost:8441/", `projects`, projectRequest, null);
+		const options = getOptions("http://localhost:8441/", `projects`, null, projectRequest);
 		return rp.post(options);
 	}
 

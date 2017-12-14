@@ -11,7 +11,7 @@
                 <% teams.forEach(function(team) { %>
                 <li>
                     Name: <%= component.manufacturerPartNumber %><br>
-                    Organization id: <a href="http://localhost:3000/organization/<%= organization.id %>"><%= team.organizationId%></a>
+                    Organization id: <a href="/organization/<%= organization.id %>"><%= team.organizationId%></a>
                 </li>
                 <% }); %>
             </ul>

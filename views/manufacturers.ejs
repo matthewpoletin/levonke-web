@@ -10,7 +10,7 @@
             <ul>
                 <% manufacturers.forEach(function(manufacturer) { %>
                 <li>
-                    Name: <a href="http://localhost:3000/manufacturer/<%= manufacturer.id %>"><%= manufacturer.name %></a><br>
+                    Name: <a href="/manufacturer/<%= manufacturer.id %>"><%= manufacturer.name %></a><br>
                     <s>Description: <%= manufacturer.description %></s>
                 </li>
                 <% }); %>

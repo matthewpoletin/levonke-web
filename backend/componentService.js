@@ -9,7 +9,7 @@ class componentService {
 	}
 
 	static createComponent(componentRequest) {
-		const options = getOptions("http://localhost:8441/", "components", componentRequest, null);
+		const options = getOptions("http://localhost:8441/", "components", null, componentRequest);
 		return rp.post(options);
 	}
 
@@ -28,7 +28,7 @@ class componentService {
 	}
 
 	static updateComponentById(id, componentRequest) {
-		const options = getOptions("http://localhost:8441/", `components/${id}`, { page: page, size: size }, null);
+		const options = getOptions("http://localhost:8441/", `components/${id}`, null, componentRequest);
 		return rp.patch(options);
 	}
 

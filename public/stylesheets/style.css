@@ -1,5 +1,4 @@
 body {
-    /*padding: 50px;*/
     font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
@@ -119,13 +118,48 @@ a:hover {
 }
 
 .content {
-    padding-right: 50px;
-    padding-left: 50px;
+    margin-right: 50px;
+    margin-left: 50px;
     padding-bottom: 30px;
+}
+
+.content textarea {
+    resize: none;
+    overflow:hidden;
 }
 
 .new-team {
     align-content: right;
+}
+
+.organization {
+    position: relative;
+    z-index: 1;
+    background: #f9f9f9;
+    /*width: 100%;*/
+    max-width: 400px;
+    height: 80px;
+    padding: 10px 15px 15px 10px;
+    margin: 10px 10px 10px 10px;
+    border: 1px solid #e5e5df;
+    border-radius: 3px;
+    box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.15);
+    overflow: hidden;
+}
+
+a .organization,
+a:focus .organization {
+    color: black;
+    text-decoration: none;
+}
+
+a:hover .organization{
+    background: #f3f3f3;
+    box-shadow: 2.5px 2.5px 0 rgba(0, 0, 0, 0.10);
+}
+
+.organization-img {
+    min-width: 60px;
 }
 
 .footer {

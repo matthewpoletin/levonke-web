@@ -13,8 +13,8 @@
 
             <div class="pure-menu pure-menu-horizontal submenu submenu-manufacturer">
                 <ul class="pure-menu-list">
-                    <li class="pure-menu-item"><a class="pure-menu-link" href="/manufacturer/<%= manufacturer.id %>/components"><i class="fas fa-microchip"></i>&nbspComponents</a></li>
-                    <li class="pure-menu-item"><a class="pure-menu-link" href="/manufacturer/<%= manufacturer.id %>/settings"><i class="fas fa-cog"></i>&nbspSettings</a></li>
+                    <li class="pure-menu-item"><a class="pure-menu-link" href="/manufacturer/<%= manufacturer.id %>/components"><i class="fas fa-microchip"></i>&nbsp;Components</a></li>
+                    <li class="pure-menu-item"><a class="pure-menu-link" href="/manufacturer/<%= manufacturer.id %>/settings"><i class="fas fa-cog"></i>&nbsp;Settings</a></li>
                 </ul>
             </div>
             <!--TODO: add into css-->
@@ -60,7 +60,7 @@
                     <label for="website">Website</label>
                     <input id="website" class="pure-input-1" type="text" placeholder="Website" value="<%=manufacturer.website%>">
 
-                    <label for="password">Description</label>
+                    <label for="description">Description</label>
                     <s><textarea class="pure-input-1" id="description" placeholder="Description" style="resize: none"><%=manufacturer.description%></textarea></s>
 
                     <button type="submit" class="pure-button pure-input-1 pure-button-primary">Save</button>

@@ -3,13 +3,13 @@ const getOptions = require('./../options');
 
 class userService {
 
-	static getUsers(page, size) {
-		const options = getOptions("http://localhost:8441/", `users`, { page: page, size: size }, null);
+	static getUsers(page, size, username) {
+		const options = getOptions("http://localhost:8441/", `users`, { page: page, size: size, username: username}, null);
 		return rp.get(options);
 	}
 
 	static createUser(userRequest) {
-		const options = getOptions("http://localhost:8441/", `users`, userRequest, null);
+		const options = getOptions("http://localhost:8441/", `users`, null, userRequest);
 		return rp.post(options);
 	}
 
@@ -19,11 +19,16 @@ class userService {
 	}
 
 	static getUserByUsername(username) {
-		const options = getOptions("http://localhost:8441/", `user/${username}`, null, null);
+		const options = getOptions("http://localhost:8441/", `users/username/${username}`, null, null);
 		return rp.get(options);
 	}
 
-	static updataUserById(id, userRequest) {
+	static getUserByEmail(email) {
+		const options = getOptions("http://localhost:8441/", `users/email${email}`, null, null);
+		return rp.get(options);
+	}
+
+	static updateUserById(id, userRequest) {
 		const options = getOptions("http://localhost:8441/", `users/${id}`, null, userRequest);
 		return rp.patch(options);
 	}

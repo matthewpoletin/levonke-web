@@ -1,12 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const config = require('./../config');
-const userService = require('./../backend/userService');
+const config = require("./../config");
+const auth = require("./../auth");
+const userService = require("./../backend/userService");
 
 router.get('/', async (req, res, next) => {
-	// TODO: load username from auth
-	const username = "matthewpoletin";
-	const userResponse = await userService.getUserByUsername(username);
+	const userResponse = await auth.getCurrentUser();
 	res.render('settings', {
 		projectName: config.project.name,
 		title: config.project.name,

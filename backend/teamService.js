@@ -9,12 +9,18 @@ class teamService {
 	}
 
 	static createTeam(teamRequest) {
-		const options = getOptions("http://localhost:8441/", `teams`, teamRequest, null);
+		const options = getOptions("http://localhost:8441/", `teams`, null, teamRequest);
 		return rp.post(options);
 	}
 
 	static getTeamById(id) {
 		const options = getOptions("http://localhost:8441/", `teams/${id}`, null, null);
+		return rp.get(options);
+	}
+
+	// TODO: add support in community service and api
+	static getTeamByName(name) {
+		const options = getOptions("http://localhost:8441/", `team/${name}`, null, null);
 		return rp.get(options);
 	}
 

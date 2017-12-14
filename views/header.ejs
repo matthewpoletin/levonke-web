@@ -7,13 +7,41 @@
         <div class="pure-menu pure-menu-horizontal pure-menu-scrollable custom-menu custom-menu-bottom custom-menu-tucked" id="tuckedMenu">
             <div class="custom-menu-screen"></div>
             <ul class="pure-menu-list">
-                <li class="pure-menu-item"><a class="pure-menu-link" href="/users"><i class="fas fa-user"></i>&nbspUsers</a></li>
-                <li class="pure-menu-item"><a class="pure-menu-link" href="/organizations"><i class="fas fa-building"></i>&nbspOrganizations</a></li>
-                <li class="pure-menu-item"><a class="pure-menu-link" href="/teams"><i class="fas fa-users"></i>&nbspTeams</a></li>
-                <li class="pure-menu-item"><a class="pure-menu-link" href="/projects"><i class="fas fa-book"></i>&nbspProjects</a></li>
-                <li class="pure-menu-item"><a class="pure-menu-link" href="/versions"><i class="fas fa-file-alt"></i>&nbspVersions</a></li>
-                <li class="pure-menu-item"><a class="pure-menu-link" href="/components"><i class="fas fa-microchip"></i>&nbspComponents</a></li>
-                <li class="pure-menu-item"><a class="pure-menu-link" href="/manufacturers"><i class="fas fa-industry"></i>&nbspManufacturers</a></li>
+                <li class="pure-menu-item">
+                    <form class="pure-form" accept-charset="UTF-8" method="get" action="/search">
+                        <input name="q" type="text" class="pure-input-rounded">
+                    </form>
+                </li>
+                <li class="pure-menu-item">
+                    <a class="pure-menu-link" href="/users">
+                        <i class="fas fa-user"></i>&nbsp;Users
+                    </a>
+                </li>
+                <li class="pure-menu-item">
+                    <a class="pure-menu-link" href="/organizations">
+                        <i class="fas fa-building"></i>&nbsp;Organizations
+                    </a>
+                </li>
+                <li class="pure-menu-item">
+                    <a class="pure-menu-link" href="/teams">
+                        <i class="fas fa-users"></i>&nbsp;Teams
+                    </a>
+                </li>
+                <li class="pure-menu-item">
+                    <a class="pure-menu-link" href="/projects">
+                        <i class="fas fa-book"></i>&nbsp;Projects
+                    </a>
+                </li>
+                <li class="pure-menu-item">
+                    <a class="pure-menu-link" href="/components">
+                        <i class="fas fa-microchip"></i>&nbsp;Components
+                    </a>
+                </li>
+                <li class="pure-menu-item">
+                    <a class="pure-menu-link" href="/manufacturers">
+                        <i class="fas fa-industry"></i>&nbsp;Manufacturers
+                    </a>
+                </li>
                 <li class="pure-menu-item pure-menu-has-children pure-menu-allow-hover">
                     <a class="pure-menu-link"><i class="fas fa-plus"></i></a>
                     <ul class="pure-menu-children">
@@ -23,7 +51,9 @@
                     </ul>
                 </li>
                 <li class="pure-menu-item pure-menu-has-children pure-menu-allow-hover">
-                    <a href="#" id="menuLink1" class="pure-menu-link">*avatar*</a>
+                    <a href="#" id="menuLink1" class="pure-menu-link">
+                        <img width="20px" height="20px" src="" style="background-color:wheat">
+                    </a>
                     <ul class="pure-menu-children">
                         <li class="pure-menu-item"><a href="/settings" class="pure-menu-link">Settings</a></li>
                         <li class="pure-menu-item"><a href="/user/matthewpoletin" class="pure-menu-link">Profile</a></li>

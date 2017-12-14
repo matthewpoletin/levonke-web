@@ -9,29 +9,110 @@
             <% if (team) { %>
             Name: <%= team.name %><br>
             <% } %>
+
             <% if (organization) { %>
             Organization: <a href="/organization/<%= organization.id %>"><%= organization.name %></a><br>
             <% } %>
+
+            <div class="pure-menu pure-menu-horizontal organization-submenu">
+                <ul class="pure-menu-list">
+                    <!--TODO: Remove underline from icon and space-->
+                    <li class="pure-menu-item"><a class="pure-menu-link" href="/team/<%= team.id %>/users"><i class="fas fa-user"></i>&nbsp;Users</a></li>
+                    <li class="pure-menu-item"><a class="pure-menu-link" href="/team/<%= team.id %>/projects"><i class="fas fa-book"></i>&nbsp;Projects</a></li>
+                    <li class="pure-menu-item"><a class="pure-menu-link" href="/team/<%= team.id %>/settings"><i class="fa fa-cog"></i>&nbsp;Settings</a></li>
+                </ul>
+            </div>
+            <!--TODO: add padding in css-->
+            <br>
+
+            <% if(pageType === "main") { %>
+
+            <% } %>
+
+            <% if(pageType === "users") { %>
             <% if (users) { %>
-            <ul>
-                <lh>Members:</lh>
-                <% users.forEach((user) => { %>
-                <li>
-                    <a href="/user/<%= user.username %>"><%= user.username %></a>
-                </li>
-                <% }) %>
-            </ul>
+            <table class="pure-table" width="100%">
+                <thead>
+                <tr align="center">
+                    <th></th>
+                    <th>Username</th>
+                    <th>Name</th>
+                    <th>Surname</th>
+                    <th><s>Role</s></th>
+                    <th><s>2FX</s></th>
+                </tr>
+                </thead>
+                <tbody align="center">
+                <% users.forEach(function(user, position) { %>
+                <tr <% if (position % 2) { %>class="pure-table-odd"<% } %>>
+                    <!--TODO: add avatar support to users-->
+                    <td>*avatar*</td>
+                    <td><a href="/user/<%= user.username %>"><%=user.username%></a></td>
+                    <td><%=user.forename%></td>
+                    <td><%=user.surname%></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <% }); %>
+                </tbody>
+            </table>
             <% } %>
+            <% } %>
+
+            <% if (pageType === "projects") { %>
             <% if (projects) { %>
-            <ul>
-                <lh>Projects:</lh>
-                <% projects.forEach((project) => { %>
-                <li>
-                    <a href="/projects/<%= project.id %>"><%= project.name %></a>
-                </li>
-                <% }) %>
-            </ul>
+            <table class="pure-table" width="100%">
+                <thead>
+                <tr align="center">
+                    <th></th>
+                    <th>Name</th>
+                    <th>Last available version</th>
+                    <th><s>Last stable version</s></th>
+                </tr>
+                </thead>
+                <tbody align="center">
+                <% projects.forEach(function(project, position) { %>
+                <tr <% if (position % 2) { %>class="pure-table-odd"<% } %>>
+                    <!--TODO: add avatar support to users-->
+                    <td>*avatar*</td>
+                    <td><a href="/project/<%= project.id %>"><%=project.name%></a></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <% }); %>
+                </tbody>
+            </table>
             <% } %>
+            <% } %>
+
+            <% if (pageType === "settings") { %>
+            <form class="pure-form pure-form-stacked">
+                <fieldset>
+                    <legend>Settings</legend>
+
+                    <img width="80px" height="80px" src="" style="background-color:wheat">
+                    <label for="file">Choose image to upload</label>
+                    <input type="file" name="picField" id="picField" size="24" onchange="preview_2(this);" alt=""/>
+
+                    <legend>Settings</legend>
+                    <label for="name">Name</label>
+                    <input class="pure-input-1" id="name" type="text" placeholder="Name" value="<%=team.name%>" required>
+                    <span class="pure-form-message">This is a required field.</span>
+
+                    <label for="password">Description</label>
+                    <s><textarea class="pure-input-1" id="description" placeholder="Description" style="resize: none">*description*</textarea></s>
+
+                    <button type="submit" class="pure-button pure-input-1 pure-button-primary" style="background-color: #00ad00">Save</button>
+
+                    <!--TODO: add padding in css-->
+                    <br><br>
+                    <legend>Danger zone</legend>
+                    <!--<label for="name" class="pure-input-3-4">Delete team</label>-->
+                    <button type="button" class="pure-button pure-input-1">Delete team</button>
+                </fieldset>
+            </form>
+            <% } %>
+
         </div>
         <%- include('footer', {}); %>
     </body>

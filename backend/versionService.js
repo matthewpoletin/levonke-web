@@ -9,7 +9,7 @@ class versionService {
 	}
 
 	static createVersion(versionRequest) {
-		const options = getOptions("http://localhost:8441/", `versions`, versionRequest, null);
+		const options = getOptions("http://localhost:8441/", `versions`, null, versionRequest);
 		return rp.post(options);
 	}
 

@@ -1,5 +1,7 @@
 const index = require('./routes/indexController');
 
+const dashboard = require('./routes/dashboardController');
+
 const login = require('./routes/loginController');
 const join = require('./routes/joinController');
 
@@ -30,6 +32,8 @@ const manufacturers = require('./routes/manufacturersController');
 
 function router(app) {
 	app.use('/', index);
+
+	app.use('/dashboard', dashboard);
 
 	app.use('/join', join);
 	app.use('/login', login);
