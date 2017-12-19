@@ -4,27 +4,27 @@ const getOptions = require('./../options');
 class versionService {
 
 	static getVersions(page, size) {
-		const options = getOptions("http://localhost:8441/", `versions`, { page: page, size: size }, null);
+		const options = getOptions("http://localhost:8441", `/versions`, { page: page, size: size }, null);
 		rp.get(options);
 	}
 
 	static createVersion(versionRequest) {
-		const options = getOptions("http://localhost:8441/", `versions`, null, versionRequest);
+		const options = getOptions("http://localhost:8441", `/versions`, null, versionRequest);
 		return rp.post(options);
 	}
 
 	static getTeamById(id) {
-		const options = getOptions("http://localhost:8441/", `versions/${id}`, null, null);
+		const options = getOptions("http://localhost:8441", `/versions/${id}`, null, null);
 		return rp.get(options);
 	}
 
 	static updateTeamById(id, teamRequest) {
-		const options = getOptions("http://localhost:8441/", `versions/${id}`, teamRequest, null);
+		const options = getOptions("http://localhost:8441", `/versions/${id}`, teamRequest, null);
 		return rp.patch(options);
 	}
 
 	static deleteTeamById(id) {
-		const options = getOptions("http://localhost:8441/", `versions/${id}`, null, null);
+		const options = getOptions("http://localhost:8441", `/versions/${id}`, null, null);
 		return rp.delete(options);
 	}
 

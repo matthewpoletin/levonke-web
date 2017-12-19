@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const config = require('./../config');
+const config = require("./../config");
+const errorHandler = require("./abstractController");
 const componentService = require('./../backend/componentService');
 const manufacturerService = require('./../backend/manufacturerService');
 
@@ -22,21 +23,11 @@ router.get('/', async (req, res, next) => {
 		res.render('components', {
 			projectName: config.project.name,
 			title: config.project.name + " | Components",
-			components: componentsResponse,
+			components: componentsResponse.content,
 			manufacturers: manufacturersMap
 		});
 	} catch (error) {
-		// TODO: move to separate function
-		res.locals.message = error.message;
-		res.locals.error = req.app.get('env') === 'development' ? error : {};
-
-		const statusCode = error.statusCode;
-		res.status(statusCode || 500);
-		res.render('error', {
-			projectName: config.project.name,
-			title: statusCode,
-			message: error.message
-		});
+		errorHandler(error, req, res, next);
 	}
 
 });

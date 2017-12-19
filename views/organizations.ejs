@@ -38,43 +38,43 @@
             <p>Organization keeps your most beloved ones together</p>
             <div class="pure-g">
                 <div class="pure-u-2-3">
-                    <form class="pure-form pure-form-stacked" method="post" accept-charset="UTF-8" action="/organizations/new" autocomplete="off" id="signup-info-form">
+                    <form class="pure-form pure-form-stacked" method="post" accept-charset="UTF-8" action="/organizations/new" autocomplete="off" id="organization-form">
                         <fieldset>
                             <div class="pure-control-group">
                                 <label for="name">Name</label>
-                                <!--TODO: check for spaces-->
-                                <input class="pure-input-1" id="name" name="name" type="text" placeholder="Name"  pattern="^((?!viagra)(?!cialis).)*$" required value="Name">
+                                <input class="pure-input-1" id="name" name="name" type="text" placeholder="Name" pattern="^[a-zA-Z]+$" required>
                                 <span class="pure-form-message-inline">This is a required field.</span>
                             </div>
 
                             <div class="pure-control-group">
                                 <label for="name">Official name</label>
-                                <!--TODO: check for spaces-->
-                                <input class="pure-input-1" id="officialName" name="officialName" type="text" placeholder="Official Name" pattern="^((?!viagra)(?!cialis).)*$" required value="Official name">
+                                <input class="pure-input-1" id="officialName" name="officialName" type="text" placeholder="Official Name" required>
+                                <span class="pure-form-message-inline">This is a required field.</span>
                             </div>
 
                             <div class="pure-control-group">
                                 <label for="description">Description</label>
-                                <textarea class="pure-input-1" id="description" placeholder="Description">Description</textarea>
+                                <textarea class="pure-input-1" id="description" placeholder="Description"></textarea>
                             </div>
 
                             <div class="pure-control-group">
                                 <label for="pubEmail">Public Email Address</label>
-                                <input class="pure-input-1" id="pubEmail" name="pubEmail" type="email" placeholder="Email Address" value="temp@gmail.com">
+                                <input class="pure-input-1" id="pubEmail" name="pubEmail" type="email" placeholder="Email Address">
                             </div>
 
                             <div class="pure-control-group">
                                 <label for="website">Website</label>
-                                <input class="pure-input-1" id="website" name="website" type="text" placeholder="Website" value="server.com">
+                                <input class="pure-input-1" id="website" name="website" type="text" placeholder="Website">
                             </div>
-
+                            <br>
                             <div class="pure-controls">
-                                <button type="submit" class="pure-button pure-button-primary">Save info</button>
+                                <button type="submit" id="submit" class="pure-button pure-button-primary" disabled>Save info</button>
                             </div>
                         </fieldset>
                     </form>
                 </div>
             </div>
+            <script src="/js/organization.js"></script>
             <% } %>
 
         </div>

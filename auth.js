@@ -10,7 +10,7 @@ class auth {
 		// TODO: [AUTH] change to real one
 		const username = "MatthewPoletin";
 		try {
-			return userService.getUserByUsername(username);
+			return userService.getUserBy({username});
 		} catch (error) {
 			console.log(`Error: user ${username} not found`);
 		}

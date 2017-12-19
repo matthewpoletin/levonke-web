@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const config = require("./../config");
+const errorHandler = require("./abstractController");
 const auth = require("./../auth");
 const userService = require("./../backend/userService");
 
@@ -27,11 +28,11 @@ router.post('/', async (req, res, next) => {
 	errors = req.validationErrors();
 	// TODO: add sanitize
 	// TODO: t&c is checked
-	// req.checkBody('cb', 'Accept').isChecked();
+	// req.checkBody('cbInput', 'Accept').isChecked();
 	const username = req.body.username;
 	if (!errors) {
 		try {
-			const userByUsernameResponse = userService.getUserByUsername(username);
+			const userByUsernameResponse = userService.getUserBy(username);
 			if (userByUsernameResponse.username === username) errors.username = "Username already taken";
 		} catch (error) {
 			console.log("Error: couldn't find user " + username)
@@ -60,17 +61,7 @@ router.post('/', async (req, res, next) => {
 			auth.setCurrentUser(userResponse);
 			res.redirect('/join/info')
 		} catch (error) {
-			// TODO: move to separate function
-			res.locals.message = error.message;
-			res.locals.error = req.app.get('env') === 'development' ? error : {};
-
-			const statusCode = error.statusCode;
-			res.status(statusCode || 500);
-			res.render('error', {
-				projectName: config.project.name,
-				title: statusCode,
-				message: error.message
-			});
+			errorHandler(error, req, res, next);
 		}
 	}
 });
@@ -122,17 +113,7 @@ router.post('/info', async (req, res, next) => {
 			// TODO: set auth info to user
 			res.redirect('/join/info')
 		} catch (error) {
-			// TODO: move to separate function
-			res.locals.message = error.message;
-			res.locals.error = req.app.get('env') === 'development' ? error : {};
-
-			const statusCode = error.statusCode;
-			res.status(statusCode || 500);
-			res.render('error', {
-				projectName: config.project.name,
-				title: statusCode,
-				message: error.message
-			});
+			errorHandler(error, req, res, next);
 		}
 	}
 });
@@ -151,7 +132,7 @@ router.get('/personalize', function(req, res, next) {
 /**
  *
  */
-router.post('/personaliza', function (req, res, next) {
+router.post('/personalize', function (req, res, next) {
 
 });
 

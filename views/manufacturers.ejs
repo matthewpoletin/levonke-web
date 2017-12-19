@@ -11,7 +11,7 @@
                 <% manufacturers.forEach(function(manufacturer) { %>
                 <li>
                     Name: <a href="/manufacturer/<%= manufacturer.id %>"><%= manufacturer.name %></a><br>
-                    <s>Description: <%= manufacturer.description %></s>
+                    Description: <%= manufacturer.description %>
                 </li>
                 <% }); %>
             </ul>

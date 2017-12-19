@@ -2,9 +2,11 @@ const express = require('express');
 const router = express.Router();
 const config = require("./../config");
 const auth = require("./../auth");
+const errorHandler = require("./abstractController");
 const organizationService = require("./../backend/organizationService");
 const userService = require("./../backend/userService");
 const teamService = require("./../backend/teamService");
+
 /**
  * Render organization main page
  */
@@ -39,7 +41,7 @@ router.get('/:id/teams', async (req, res, next) => {
 		pageType: "teams",
 		organization: organizationResponse,
 		owner: ownerResponse,
-		teams: teamsResponse
+		teams: teamsResponse.content
 	});
 });
 
@@ -61,44 +63,47 @@ router.get('/:id/teams/new', async (req, res, next) => {
  * Create new team of organization
  */
 router.post('/:id/teams/new', async (req, res, next) => {
-	const organizationId = parseInt(req.params.id, 10);
-	const organizationResponse = await organizationService.getOrganizationById(organizationId);
-	// TODO: add all types of validation
-	req.checkBody('name', 'Name required').notEmpty();
+	const validationErrors = [];
 
+	const organizationId = parseInt(req.params.id, 10);
+	try {
+		const organizationResponse = await organizationService.getOrganizationById(organizationId);
+	} catch (error) {
+		errorHandler(error, req, res, next);
+	}
+	req.checkBody('name', 'Name required').notEmpty();
+	validationErrors.push.apply(validationErrors, req.validationErrors());
 	// TODO: add sanitize
 
-	// TODO: check if team with this name exists
 	const newTeamName = req.body.name;
-	const teamRequest = await teamService.getTeamByName(newTeamName);
-
-	const errors = req.validationErrors();
-	if (errors) {
-		res.redirect('/req.');
-		return next(errors);
+	try {
+		await teamService.getTeamByName(newTeamName);
+	} catch (error) {
+		validationErrors.push({
+			location: "body",
+			param: "name",
+			msg: "Name is already taken",
+			value: ""
+		});
+	}
+	if (validationErrors) {
+		res.redirect(`organization/${organizationId}/teams/new`);
+		return next(validationErrors);
 	} else {
-		const organizationRequest = {};
-		if (req.body.name) organizationRequest.name = req.body.name;
-		if (req.body.description) organizationRequest.description = req.body.description;
-		if (req.body.pubEmail) organizationRequest.pubEmail = req.body.pubEmail;
-		if (req.body.website) organizationRequest.website = req.body.website;
+		const teamRequest = {};
+		if (req.body.name) teamRequest.name = req.body.name;
+		if (req.body.description) teamRequest.description = req.body.description;
 		try {
 			const ownerResponse = auth.getCurrentUser();
-			if (ownerResponse) organizationRequest.ownerId = ownerResponse.id;
-			const organizationResponse = await organizationService.createOrganization(organizationRequest);
-			res.redirect('/organization/' + organizationResponse.id);
+			if (ownerResponse) teamRequest.ownerId = ownerResponse.id;
+			try {
+				const teamResponse = await teamService.createTeam(teamRequest);
+				res.redirect(`/team/${teamResponse.id}/teams`);
+			} catch (error) {
+				errorHandler(error, req, res, next);
+			}
 		} catch (error) {
-			// TODO: move to separate function
-			res.locals.message = error.message;
-			res.locals.error = req.app.get('env') === 'development' ? error : {};
-
-			const statusCode = error.statusCode;
-			res.status(statusCode || 500);
-			res.render('error', {
-				projectName: config.project.name,
-				title: statusCode,
-				message: error.message
-			});
+			errorHandler(error, req, res, next);
 		}
 	}
 });

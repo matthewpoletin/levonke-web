@@ -11,6 +11,7 @@ a:hover {
     text-decoration: underline;
 }
 
+/* Header */
 .custom-menu-wrapper {
     background-color: #808080;
     margin-bottom: 2.5em;
@@ -117,6 +118,7 @@ a:hover {
     transform: translateY(-44px);
 }
 
+/* Content */
 .content {
     margin-right: 50px;
     margin-left: 50px;
@@ -126,6 +128,20 @@ a:hover {
 .content textarea {
     resize: none;
     overflow:hidden;
+}
+
+/* Join */
+.join-head{
+    margin-bottom: 20px;
+}
+
+.join-body {
+    margin:0 auto;
+}
+
+/* Dashboard */
+.dashboard-submenu {
+    margin-bottom: 20px;
 }
 
 .new-team {
@@ -162,6 +178,11 @@ a:hover .organization{
     min-width: 60px;
 }
 
+.error {
+    border-color: #ff0000 !important;
+}
+
+/* Footer */
 .footer {
     padding: 1em 0;
 }

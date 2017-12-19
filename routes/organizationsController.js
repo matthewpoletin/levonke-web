@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const config = require("./../config");
 const auth = require("../auth");
+const errorHandler = require("./abstractController");
 const organizationService = require("./../backend/organizationService");
 const userService = require("./../backend/userService");
 
@@ -11,13 +12,17 @@ const userService = require("./../backend/userService");
 router.get('/', async (req, res, next) => {
 	const page = parseInt(req.query.page, 10) || 0;
 	const size = parseInt(req.query.size, 10) || 25;
-	const organizationsResponse = await organizationService.getOrganizations(page, size);
-	res.render('organizations', {
-		projectName: config.project.name,
-		title: config.project.name + " | Organizations",
-		organizations: organizationsResponse,
-		pageType: "main"
-	});
+	try {
+		const organizationsResponse = await organizationService.getOrganizations(page, size);
+		res.render('organizations', {
+			projectName: config.project.name,
+			title: config.project.name + " | Organizations",
+			organizations: organizationsResponse.content,
+			pageType: "main"
+		});
+	} catch (error) {
+		errorHandler(error, req, res, next);
+	}
 });
 
 /**
@@ -67,17 +72,7 @@ router.post('/new', async (req, res, next) => {
 			res.redirect('/organization/' + organizationResponse.id);
 
 		} catch (error) {
-			// TODO: move to separate function
-			res.locals.message = error.message;
-			res.locals.error = req.app.get('env') === 'development' ? error : {};
-
-			const statusCode = error.statusCode;
-			res.status(statusCode || 500);
-			res.render('error', {
-				projectName: config.project.name,
-				title: statusCode,
-				message: error.message
-			});
+			errorHandler(error, req, res, next);
 		}
 	}
 });

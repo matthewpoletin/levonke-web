@@ -9,13 +9,13 @@
             <% if (pageType !== "teams-new") { %>
             <% if (organization) { %>
 
-            <div class="pure-g">
+            <div class="pure-g" style="max-width:800px;margin:0 auto;">
                 <div class="pure-u-1-4">
                     <img width="100px" height="100px" src="">
                 </div>
                 <div class="pure-u-3-4">
-                    <p><%= organization.name %></p>
-                    <p><s>Description: <%= organization.description %></s></p>
+                    <h2><%= organization.name %></h2>
+                    <p>Description: <%= organization.description %></p>
                     <p>Public email: <%= organization.pubEmail %></p>
                     <p>Website: <a href="http://<%= organization.website %>"><%= organization.website %></a></p>
                 </div>
@@ -80,16 +80,16 @@
             <% if (pageType === "teams-new") { %>
             <h2>Create new team</h2>
             <p>Team is assigned on creating new awesome projects</p>
-            <form class="pure-form pure-form-stacked" action="/organizations/teams/new" method="POST">
+            <form class="pure-form pure-form-stacked" action="/organization/<%=organization.id%>/teams/new" method="POST">
                 <fieldset>
                     <legend></legend>
 
                     <label for="name">Name</label>
-                    <input class="pure-input-1" id="name" type="text" placeholder="Name" required value="*Name*">
+                    <input class="pure-input-1" id="name" name="name" type="text" placeholder="Name">
                     <span class="pure-form-message">This is a required field.</span>
 
                     <label for="description">Description</label>
-                    <s><textarea class="pure-input-1" id="description" placeholder="Description" style="resize: none">*Description*</textarea></s>
+                    <s><textarea class="pure-input-1" id="description" name="description" placeholder="Description" style="resize: none"></textarea></s>
 
                     <button type="submit" class="pure-button pure-input-1 pure-button-primary">Save</button>
                 </fieldset>
@@ -109,7 +109,7 @@
                     <input id="officialName" name="officialName" class="pure-input-1" type="text" placeholder="Official name" value="<%=organization.officialName%>">
 
                     <label for="description">Description</label>
-                    <s><textarea class="pure-input-1" id="description" name="description" placeholder="Description" style="resize: none"><%=organization.description%></textarea></s>
+                    <textarea class="pure-input-1" id="description" name="description" placeholder="Description" style="resize: none"><%=organization.description%></textarea>
 
                     <label for="pubEmail">Public email</label>
                     <input id="pubEmail" class="pure-input-1" type="email" placeholder="Public email" value="<%=organization.pubEmail%>">
@@ -132,5 +132,6 @@
             <% } %>
         </div>
         <%- include('footer', {}); %>
+        <script src="/javascripts/team.js"></script>
     </body>
 </html>

@@ -6,48 +6,67 @@
     <body>
     <%- include('header', {}); %>
     <div class="content">
-        <div class="pure-menu pure-menu-horizontal organization-submenu">
-            <ul class="pure-menu-list">
-                <li class="pure-menu-item"><a class="pure-menu-link" href="/join/">Step 1: Public account</a></li>
-                <li class="pure-menu-item"><a class="pure-menu-link" href="/join/info">Step 2: Personal information</a></li>
-                <li class="pure-menu-item"><a class="pure-menu-link" href="/join/personalize"><s>Step 3: Your interests</s></a></li>
-            </ul>
-        </div>
-        <!--TODO: add padding in css-->
-        <br>
+
+        <div class="pure-g">
+            <div class="pure-u-1-1 join-head">
+                <div class="pure-menu pure-menu-horizontal organization-submenu">
+                    <ul class="pure-menu-list">
+                        <li class="pure-menu-item">
+                            <a class="pure-menu-link" href="/join/" <% if (pageType === "main" ) { %>style="font-weight: bold;"<% } %>>
+                                Step 1: Public account
+                            </a>
+                        </li>
+                        <li class="pure-menu-item">
+                            <a class="pure-menu-link" href="/join/info" <% if (pageType === "info" ) { %>style="font-weight: bold;"<% } %>>
+                                Step 2: Personal information
+                            </a>
+                        </li>
+                        <li class="pure-menu-item">
+                            <a class="pure-menu-link" href="/join/personalize" <% if (pageType === "personalize" ) { %>style="font-weight: bold;"<% } %>>
+                                Step 3: Your interests
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
 
         <% if (pageType === "main") { %>
-        <form class="pure-form pure-form-aligned" method="post" accept-charset="UTF-8" action="/join" autocomplete="off" id="signup-join-form">
-            <fieldset>
-                <div class="pure-control-group">
-                    <label for="name">Username</label>
-                    <input id="name" name="username" type="text" placeholder="Username" required value="temp">
-                    <span class="pure-form-message-inline">This is a required field.</span>
-                </div>
+            <div class="pure-u-1-1 join-body">
+                <form class="pure-form pure-form-aligned" method="post" accept-charset="UTF-8" action="/join" autocomplete="off" id="signup-join-form">
+                    <fieldset>
+                        <div class="pure-control-group">
+                            <label for="name">Username</label>
+                            <input id="username" name="username" type="text" placeholder="Username" pattern="^[a-zA-Z]+$" required>
+                            <span class="pure-form-message-inline">This is a required field</span>
+                        </div>
 
-                <div class="pure-control-group">
-                    <label for="email">Email Address</label>
-                    <input id="email" name="email" type="email" placeholder="Email Address" required value="temp@gmail.com">
-                    <span class="pure-form-message-inline">This is a required field.</span>
-                </div>
+                        <div class="pure-control-group">
+                            <label for="email">Email Address</label>
+                            <input id="email" name="email" type="email" placeholder="Email Address" required>
+                            <span class="pure-form-message-inline">This is a required field</span>
+                        </div>
 
-                <div class="pure-control-group">
-                    <label for="password">Password</label>
-                    <input id="password" name="password" type="password" placeholder="Password" required value="qwerty">
-                    <span class="pure-form-message-inline">This is a required field.</span>
-                </div>
+                        <div class="pure-control-group">
+                            <label for="password">Password</label>
+                            <input id="password" name="password" type="password" placeholder="Password" required>
+                            <span class="pure-form-message-inline">This is a required field</span>
+                        </div>
 
-                <div class="pure-controls">
-                    <label for="cb" class="pure-checkbox">
-                        <input id="cb" type="checkbox" required checked> I've read the <a href="/help/terms-and-conditions">terms and conditions</a>
-                    </label>
-                    <label for="ru" class="pure-checkbox">
-                        <input id="ru" type="checkbox" checked>&nbsp;<s>I want to receive update on email</s>
-                    </label>
-                    <button type="submit" class="pure-button pure-button-primary">Join <%=projectName%></button>
-                </div>
-            </fieldset>
-        </form>
+                        <div class="pure-controls">
+                            <label for="cb" class="pure-checkbox">
+                                <input id="cb" type="checkbox" required>&nbsp;I've read the <a href="/help/terms-and-conditions">terms and conditions</a>
+                            </label>
+                            <label for="ru" class="pure-checkbox">
+                                <input id="ru" type="checkbox" checked>&nbsp;I want to receive update on email
+                            </label>
+                            <button type="submit" id="submit" class="pure-button pure-button-primary" disabled>Join <%=projectName%></button>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+
+        <script src="/js/join.js"></script>
         <% } %>
 
         <% if (pageType === "info") { %>
@@ -55,27 +74,27 @@
             <fieldset>
                 <div class="pure-control-group">
                     <label for="name">Name</label>
-                    <input id="name" name="name" type="text" placeholder="Name" required value="Name">
+                    <input id="name" name="name" type="text" placeholder="Name">
                 </div>
 
                 <div class="pure-control-group">
                     <label for="surname">Surname</label>
-                    <input id="surname" name="surname" type="text" placeholder="Surname" required value="Surname">
+                    <input id="surname" name="surname" type="text" placeholder="Surname">
                 </div>
 
                 <div class="pure-control-group">
                     <label for="pubEmail">Public Email Address</label>
-                    <input id="pubEmail" name="pubEmail" type="email" placeholder="Email Address" required value="temp@gmail.com">
+                    <input id="pubEmail" name="pubEmail" type="email" placeholder="Email Address">
                 </div>
 
                 <div class="pure-control-group">
                     <label for="fbLink">Facebook</label>
-                    <input id="fbLink" name="fbLink" type="text" placeholder="Facebook" required value="fb.me/temp">
+                    <input id="fbLink" name="fbLink" type="text" placeholder="Facebook">
                 </div>
 
                 <div class="pure-control-group">
                     <label for="ghLink">GitHub</label>
-                    <input id="ghLink" name="ghLink" type="text" placeholder="GitHub" required value="temp@gmail.com">
+                    <input id="ghLink" name="ghLink" type="text" placeholder="GitHub">
                 </div>
 
                 <div class="pure-controls">
