@@ -11,7 +11,7 @@ router.get('/', async (req, res, next) => {
 	try {
 		const componentsResponse = await componentService.getComponents(page, size);
 		const manufacturersResponsePromises = [];
-		componentsResponse.forEach((component) => {
+		componentsResponse.content.forEach((component) => {
 			const manufacturerId = parseInt(component.manufacturerId, 10);
 			if (manufacturerId) manufacturersResponsePromises.push(manufacturerService.getManufacturerById(manufacturerId));
 		});

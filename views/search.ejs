@@ -6,53 +6,116 @@
     <body>
         <%- include('header', {}); %>
         <div class="content">
-            <!--TODO: force saving current search type-->
-            <form class="pure-form" accept-charset="UTF-8" method="get" action="/search?type=users">
-                <input name="q" type="text" class="pure-input-rounded pure-input-1-2" placeholder="Search" value="<%=query%>">
-            </form>
-            <!--TODO: add padding in css-->
-            <br>
-            <div class="pure-menu pure-menu-horizontal organization-submenu">
-                <ul class="pure-menu-list">
-                    <li class="pure-menu-item"><a class="pure-menu-link" href="/search?type=projects&q=<%=query%>"><i class="fas fa-book"></i>&nbsp;Projects</a></li>
-                    <li class="pure-menu-item"><a class="pure-menu-link" href="/search?type=teams&q=<%=query%>"><i class="fas fa-users"></i>&nbsp;Teams</a></li>
-                    <li class="pure-menu-item"><a class="pure-menu-link" href="/search?type=organizations&q=<%=query%>"><i class="fas fa-building"></i>&nbsp;Organizations</a></li>
-                    <li class="pure-menu-item"><a class="pure-menu-link" href="/search?type=users&q=<%=query%>"><i class="fas fa-user"></i>&nbsp;Users</a></li>
-                    <li class="pure-menu-item"><a class="pure-menu-link" href="/search?type=manufacturers&q=<%=query%>"><i class="fas fa-industry"></i>&nbsp;Manufacturers</a></li>
-                </ul>
-            </div>
-            <!--TODO: add padding in css-->
-            <br>
+            <div class="search">
 
-            <% if (pageType === "projects") { %>
-
-            <% } %>
-
-            <% if (pageType === "teams") { %>
-
-            <% } %>
-
-            <% if (pageType === "organization") { %>
-
-            <% } %>
-
-            <% if (pageType === "users") { %>
-            <% if(users !== null) { %>
-            <ul>
-            <% users.forEach((user) => { %>
-                <div class="pure-g">
-                    <div class="pure-u-1-3"><img width="25px" height="25px" src="" style="background-color: #aaaaaa"></div>
-                    <div class="pure-u-2-3"><a href="/user/<%=user.username%>"><%=user.username%></a></div>
+                <div class="menu">
+                    <!--TODO: force saving current search type-->
+                    <div class="">
+                        <form class="pure-form" accept-charset="UTF-8" method="get" action="/search?type=users">
+                            <input name="q" type="text" class="pure-input-rounded pure-input-1" placeholder="Search" value="<%=query%>">
+                        </form>
+                        <!--TODO: add padding in css-->
+                        <br>
+                    </div>
+                    <div class="pure-menu pure-menu-horizontal organization-submenu">
+                        <ul class="pure-menu-list">
+                            <li class="pure-menu-item">
+                                <div class="<% if (pageType === "projects" ) { %>search-menu-item-selected<% } else { %>search-menu-item-blank<% }%>">
+                                    <a class="pure-menu-link" href="/search?type=projects&q=<%=query%>" >
+                                        <i class="fas fa-book"></i>&nbsp;Projects
+                                    </a>
+                                </div>
+                            </li>
+                            <li class="pure-menu-item">
+                                <div class="<% if (pageType === "teams" ) { %>search-menu-item-selected<% } else { %>search-menu-item-blank<% }%>">
+                                    <a class="pure-menu-link" href="/search?type=teams&q=<%=query%>">
+                                        <i class="fas fa-users"></i>&nbsp;Teams
+                                    </a>
+                                </div>
+                            </li>
+                            <li class="pure-menu-item">
+                                <div class="<% if (pageType === "organizations" ) { %>search-menu-item-selected<% } else { %>search-menu-item-blank<% }%>">
+                                    <a class="pure-menu-link" href="/search?type=organizations&q=<%=query%>">
+                                        <i class="fas fa-building"></i>&nbsp;Organizations
+                                    </a>
+                                </div>
+                            </li>
+                            <li class="pure-menu-item">
+                                <div class="<% if (pageType === "users" ) { %>search-menu-item-selected<% } else { %>search-menu-item-blank<% }%>">
+                                    <a class="pure-menu-link" href="/search?type=users&q=<%=query%>">
+                                        <i class="fas fa-user"></i>&nbsp;Users
+                                    </a>
+                                </div>
+                            </li>
+                            <li class="pure-menu-item">
+                                <div class="<% if (pageType === "manufacturers" ) { %>search-menu-item-selected<% } else { %>search-menu-item-blank<% }%>">
+                                    <a class="pure-menu-link" href="/search?type=manufacturers&q=<%=query%>">
+                                        <i class="fas fa-industry"></i>&nbsp;Manufacturers
+                                    </a>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <!--TODO: add padding in css-->
+                    <br>
                 </div>
-            <% }); %>
-            </ul>
-            <% } %>
-            <% } %>
 
-            <% if (pageType === "manufacturers") { %>
+                <% if (pageType === "projects") { %>
 
-            <% } %>
+                <% } %>
 
+                <% if (pageType === "teams") { %>
+                <% if(teams !== null) { %>
+                <div class="organizations">
+                    <% teams.forEach((team) => { %>
+                    <div class="pure-g user">
+                        <div class="pure-u-1-3"><img width="25px" height="25px" src=""></div>
+                        <div class="pure-u-2-3"><a href="/team/<%=team.id%>"><%=team.name%></a></div>
+                    </div>
+                    <% }); %>
+                </div>
+                <% } %>
+                <% } %>
+
+                <% if (pageType === "organizations") { %>
+                <% if(organizations !== null) { %>
+                <div class="organizations">
+                <% organizations.forEach((organization) => { %>
+                    <div class="pure-g user">
+                        <div class="pure-u-1-3"><img width="25px" height="25px" src=""></div>
+                        <div class="pure-u-2-3"><a href="/organization/<%=organization.id%>"><%=organization.name%></a></div>
+                    </div>
+                <% }); %>
+                </div>
+                <% } %>
+                <% } %>
+
+                <% if (pageType === "users") { %>
+                <% if(users.content) { %>
+                <div class="users">
+                    <% users.content.forEach((user) => { %>
+                    <div class="pure-g user">
+                        <div class="pure-u-1-3"><a href="/user/<%=user.username%>"><img width="25px" height="25px" src=""></a></div>
+                        <div class="pure-u-2-3"><a href="/user/<%=user.username%>"><%=user.username%></a></div>
+                    </div>
+                    <% }); %>
+                </div>
+
+                <% } %>
+                <% } %>
+
+                <% if (pageType === "manufacturers") { %>
+
+                <% } %>
+                <% if (pageInfo.totalPages > 0) { %>
+                <div class="navigation">
+                    <% for(let page=0; page < pageInfo.totalPages; page++) { %>
+                    <a href="/search?type=<%=pageType%>&q=<%=query%>&page=<%=page%>" <% if(page === pageInfo.page) { %>class="current-page"<% } %>><%=page+1%></a>
+                    <% } %>
+                </div>
+                <% } %>
+
+            </div>
         </div>
         <%- include('footer', {}); %>
     </body>

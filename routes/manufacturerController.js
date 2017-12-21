@@ -18,18 +18,19 @@ router.get('/:id', async (req, res, next) => {
 router.get('/:id/components', async (req, res, next) => {
 	const manufacturerId = parseInt(req.params.id, 10);
 	const manufacturerResponse = await manufacturerService.getManufacturerById(manufacturerId);
-	const componentsIdResponse = await manufacturerService.getComponentsOfManufacturer(manufacturerId);
-	const componentsResponsePromises = [];
-	componentsIdResponse.forEach((componentId) => {
-		componentsResponsePromises.push(componentService.getComponentById(componentId));
-	});
-	const componentsResponse = await Promise.all(componentsResponsePromises);
+	const componentsResponse = await manufacturerService.getComponentsOfManufacturer(manufacturerId);
+	// const componentsIdResponse = await manufacturerService.getComponentsOfManufacturer(manufacturerId);
+	// const componentsResponsePromises = [];
+	// componentsIdResponse.forEach((componentId) => {
+	// 	componentsResponsePromises.push(componentService.getComponentById(componentId));
+	// });
+	// const componentsResponse = await Promise.all(componentsResponsePromises);
 	res.render('manufacturer', {
 		pageType: "components",
 		projectName: config.project.name,
 		title: config.project.name + " | " + manufacturerResponse.name,
 		manufacturer: manufacturerResponse,
-		components: componentsResponse
+		components: componentsResponse.content
 	});
 });
 

@@ -12,7 +12,7 @@ router.get('/', async (req, res, next) => {
 		res.render('manufacturers', {
 			projectName: config.project.name,
 			title: config.project.name + " | Manufacturers",
-			manufacturers: manufacturersResponse
+			manufacturers: manufacturersResponse.content
 		});
 	} catch (error) {
 		errorHandler(error, req, res, next);

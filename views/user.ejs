@@ -7,19 +7,51 @@
         <%- include('header', {}); %>
         <div class="content">
             <% if (user) { %>
-            <img width="80px" height="80px" src="">
-            <p>Username: <%= user.username %></p>
-            <p>Name: <%= user.forename %></p>
-            <p>Surname: <%= user.surname %></p>
-            <p>Registration email: <%= user.regEmail %></p>
-            <p>Public email: <%= user.pubEmail %></p>
-            <% if (user.fbLink) { %>
-            <a href="http://<%= user.fbLink %>"><i class="fa-2x fab fa-facebook"></i></a>
-            <% } %>
-            <% if (user.ghLink) { %>
-            <a href="http://<%= user.ghLink %>"><i class="fa-2x fab fa-github"></i></a>
-            <% } %>
-            <!--<i class="fab fa-vk"></i>-->
+            <div class="pure-g user">
+                <div class="pure-u-1-3 user-info">
+                    <div class="avatar">
+                        <img width="100%" height="100%" src="">
+                    </div>
+                    <div class="info">
+                        <p><b><%= user.username.toLowerCase() %></b></p>
+                        <p><%= user.forename %> <%= user.surname %></p>
+                        <p><a href="mailto:<%= user.pubEmail %>"><%= user.pubEmail %></a></p>
+                    </div>
+                    <div class="social">
+                        <div class="item">
+                            <% if (user.fbLink) { %>
+                            <a href="http://<%= user.fbLink %>"><i class="fa-2x fab fa-facebook"></i></a>
+                            <% } %>
+                        </div>
+                        <div class="item">
+                            <% if (user.ghLink) { %>
+                            <a href="http://<%= user.ghLink %>"><i class="fa-2x fab fa-github"></i></a>
+                            <% } %>
+                        </div>
+                    </div>
+                </div>
+                <div class="pure-u-2-3">
+                    <% if (teams !== undefined) { %>
+                    <div class="teams">
+                        <div class="title">
+                            <h4>Teams</h4>
+                        </div>
+                        <% for(let num = 1; num < teams.length; num++) { %>
+                        <a href="/team/<%=teams[num].id%>">
+                            <div class="pure-g team">
+                                <div class="pure-u-1-3 avatar">
+                                    <img width="64px" height="64px" src="">
+                                </div>
+                                <div class="pure-u-2-3">
+                                    <%=teams[num].name%>
+                                </div>
+                            </div>
+                        </a>
+                        <% } %>
+                    </div>
+                    <% } %>
+                </div>
+            </div>
             <% } %>
         </div>
         <%- include('footer', {}); %>

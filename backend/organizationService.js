@@ -4,8 +4,8 @@ const getOptions = require('./../options');
 // TODO: load api server address from config file
 class organizationService {
 
-	static getOrganizations(page, size) {
-		const options = getOptions("http://localhost:8441", `/organizations`, { page: page, size: size }, null);
+	static getOrganizations(page, size, name) {
+		const options = getOptions("http://localhost:8441", `/organizations`, { page: page, size: size, name: name }, null);
 		return rp.get(options);
 	}
 

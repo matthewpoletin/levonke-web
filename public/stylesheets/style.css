@@ -120,8 +120,11 @@ a:hover {
 
 /* Content */
 .content {
-    margin-right: 50px;
-    margin-left: 50px;
+    max-width: 1012px;
+    /*margin-right: 50px;*/
+    /*margin-left: 50px;*/
+    margin-right: auto;
+    margin-left: auto;
     padding-bottom: 30px;
 }
 
@@ -144,15 +147,80 @@ a:hover {
     margin-bottom: 20px;
 }
 
-.new-team {
-    align-content: right;
+.dashboard .post {
+    border-bottom: 1px solid grey;
+    padding: 12px;
+}
+
+/* Search */
+
+.search .menu {
+    margin-bottom: 20px;
+    max-width: 640px;
+}
+
+.search-menu-item-selected {
+    font-weight: bold;
+}
+
+.search .users {
+    max-width: 640px;
+}
+
+/* Search: users */
+.search .users .user {
+    border-bottom: 1px solid gainsboro;
+    padding: 20px;
+}
+
+.search .users .user img {
+    background-color: #aaaaaa
+}
+
+.search .navigation {
+    width: 80px;
+    padding-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.search .navigation .current-page {
+    font-weight: bold;
+}
+
+/* user */
+.user-info .avatar {
+    height: 200px;
+    width: 200px;
+    margin: auto;
+    padding-bottom: 1em;
+}
+
+.user-info .info {
+    border-top: 1px solid gainsboro;
+}
+
+.user-info .social {
+    border-top: 1px solid gainsboro;
+}
+.user-info .social .item {
+    float: left;
+    margin: 10px;
+}
+
+.teams .title {
+    text-align: center;
+}
+
+.teams .team .avatar {
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .organization {
     position: relative;
     z-index: 1;
     background: #f9f9f9;
-    /*width: 100%;*/
     max-width: 400px;
     height: 80px;
     padding: 10px 15px 15px 10px;
@@ -178,13 +246,25 @@ a:hover .organization{
     min-width: 60px;
 }
 
+.new-team {
+    align-content: right;
+}
+
+.new-project {
+    align-content: right;
+}
+
 .error {
     border-color: #ff0000 !important;
 }
 
 /* Footer */
 .footer {
+    margin-top: 10px;
     padding: 1em 0;
+    margin-right: 32px;
+    margin-left: 32px;
+    border-top: 1px solid gainsboro;
 }
 
 .footer a {

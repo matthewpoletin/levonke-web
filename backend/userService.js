@@ -35,7 +35,7 @@ class userService {
 
 	static getTeams(id) {
 		const options = getOptions("http://localhost:8441", `/users/${id}/teams`, null, null);
-		return rp.delete(options);
+		return rp.get(options);
 	}
 }
 

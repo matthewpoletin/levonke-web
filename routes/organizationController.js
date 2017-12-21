@@ -88,7 +88,7 @@ router.post('/:id/teams/new', async (req, res, next) => {
 	}
 	if (validationErrors) {
 		res.redirect(`organization/${organizationId}/teams/new`);
-		return next(validationErrors);
+		// return next(validationErrors);
 	} else {
 		const teamRequest = {};
 		if (req.body.name) teamRequest.name = req.body.name;

@@ -11,7 +11,8 @@ router.get('/:username', async (req, res, next) => {
 		res.render('user', {
 			projectName: config.project.name,
 			title: config.project.name + " | " + userResponse.username,
-			user: userResponse
+			user: userResponse,
+			teams: teams
 		});
 	} catch (error) {
 		console.log(error);
