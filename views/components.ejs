@@ -7,53 +7,55 @@
         <%- include('header', {}); %>
         <div class="content">
             <% if (components) { %>
-            <script type="text/javascript">
-		        function ExposeList() {
-			        const status = document.getElementById('cbChoices').checked;
-			        if (status === true) { document.getElementById('ScrollCB').style.display = "block"; }
-			        else { document.getElementById('ScrollCB').style.display = 'none'; }
-		        }
-            </script>
-            <form class="pure-form">
-                <input type="text" class="pure-input-rounded pure-input-1-2" placeholder="Search">
-                <input type="checkbox" id="cbChoices" onclick="ExposeList()">Show Choices<br>
-                <div id="ScrollCB" class="pure-input-1-2" style="height:150;width:200px;overflow:auto;display:none;">
-                    <ul>
-                        <li><input type="checkbox">Active</li>
-                        <li><input type="checkbox">Passive</li>
-                        <li><input type="checkbox">Consumables</li>
-                    </ul>
+            <div class="component">
+                <div class="control">
+                    <form class="pure-form">
+                        <input type="text" class="pure-input-rounded pure-input-1-2" placeholder="Search">
+                        <input type="checkbox" id="cbChoices" onclick="ExposeList()">Show Choices<br>
+                        <div id="ScrollCB" class="pure-input-1-2" style="height:150;width:200px;overflow:auto;display:none;">
+                            <ul>
+                                <li><input type="checkbox">Active</li>
+                                <li><input type="checkbox">Passive</li>
+                                <li><input type="checkbox">Consumables</li>
+                            </ul>
+                        </div>
+                    </form>
+                    <script type="text/javascript">
+                        function ExposeList() {
+                            const status = document.getElementById('cbChoices').checked;
+                            if (status === true) { document.getElementById('ScrollCB').style.display = "block"; }
+                            else { document.getElementById('ScrollCB').style.display = 'none'; }
+                        }
+                    </script>
                 </div>
-            </form>
-            <!--TODO: add padding in css-->
-            <br>
-            <table class="pure-table" width="100%">
-                <thead>
-                <tr align="center">
-                    <th></th>
-                    <th>Manufacturer Part Number</th>
-                    <th>Manufacturer</th>
-                    <th>Type</th>
-                </tr>
-                </thead>
-                <tbody>
-                <% components.forEach((component, position) => { %>
-                <tr <% if (position % 2) { %>class="pure-table-odd"<% } %>>
-                    <td align="center"><img width="25px" height="25px" src="" style="background-color:wheat"></td>
-                    <td><a href="/component/<%= component.uuid %>"><%= component.manufacturerPartNumber %></a></td>
-                    <%
-                    const manufacturer = manufacturers.get(component.manufacturerId);
-                    if(manufacturer) {
-                    %>
-                    <td align="center"><a href="/manufacturer/<%=component.manufacturerId%>"><%=(manufacturers.get(component.manufacturerId)).name%></a></td>
-                    <% } else { %>
-                    <td></td>
-                    <% } %>
-                    <td align="center">*type*</td>
-                </tr>
-                <% }); %>
-                </tbody>
-            </table>
+                <table class="pure-table" width="100%">
+                    <thead>
+                    <tr align="center">
+                        <th></th>
+                        <th>Manufacturer Part Number</th>
+                        <th>Manufacturer</th>
+                        <th>Type</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <% components.forEach((component, position) => { %>
+                    <tr <% if (position % 2) { %>class="pure-table-odd"<% } %>>
+                        <td align="center"><img width="25px" height="25px" src=""></td>
+                        <td><a href="/component/<%= component.uuid %>"><%= component.manufacturerPartNumber %></a></td>
+                        <%
+                        const manufacturer = manufacturers.get(component.manufacturerId);
+                        if(manufacturer) {
+                        %>
+                        <td align="center"><a href="/manufacturer/<%=component.manufacturerId%>"><%=(manufacturers.get(component.manufacturerId)).name%></a></td>
+                        <% } else { %>
+                        <td></td>
+                        <% } %>
+                        <td align="center">*type*</td>
+                    </tr>
+                    <% }); %>
+                    </tbody>
+                </table>
+            </div>
             <% } %>
         </div>
         <%- include('footer', {}); %>

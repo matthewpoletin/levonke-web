@@ -2,9 +2,10 @@ const express = require('express');
 const router = express.Router();
 const config = require('./../config');
 const userService = require("../backend/userService");
-const projectService = require("../backend/projectService");
 const teamService = require("../backend/teamService");
 const organizationService = require("../backend/organizationService");
+const projectService = require("../backend/projectService");
+const manufacturerService = require("../backend/manufacturerService");
 
 router.get('/', async (req, res, next) => {
 	const defaultPage = 0;
@@ -17,16 +18,20 @@ router.get('/', async (req, res, next) => {
 		projectName: config.project.name,
 		title: "Serach" + " | " + query,
 		query: query,
-		pageInfo: {}
+		pageInfo: {
+			totalPages: 0
+		}
 	};
 	switch (pageType) {
 		case "teams":
 		case "Teams":
 			try{
-				const teamsResponse = await teamService.getTeams(page, size);
-				if (teamsResponse) data.teams = teamsResponse.content;
-				else data.teams = null;
-				data.pageInfo.totalPages = teamsResponse.totalPages;
+				data.teams = null;
+				const teamsResponse = await teamService.getTeams(page, size, query);
+				if (teamsResponse) {
+					data.teams = teamsResponse.content;
+					data.pageInfo.totalPages = teamsResponse.totalPages;
+				}
 			} catch (error) {
 				console.log(error);
 			}
@@ -34,10 +39,12 @@ router.get('/', async (req, res, next) => {
 		case "organizations":
 		case "Organizations":
 			try{
+				data.organizations = null;
 				const organizationsResponse = await organizationService.getOrganizations(page, size, query);
-				if (organizationsResponse) data.organizations = organizationsResponse.content;
-				else data.organizations = null;
-				data.pageInfo.totalPages = organizationsResponse.totalPages;
+				if (organizationsResponse) {
+					data.organizations = organizationsResponse.content;
+					data.pageInfo.totalPages = organizationsResponse.totalPages;
+				}
 			} catch (error) {
 				console.log(error);
 			}
@@ -47,22 +54,36 @@ router.get('/', async (req, res, next) => {
 			try {
 				data.users = null;
 				const usersResponse = await userService.getUsers(page, size, query);
-				data.pageInfo.totalPages = usersResponse.totalPages;
-				if (usersResponse) data.users = usersResponse;
-				else data.users = null;
+				if (usersResponse) {
+					data.users = usersResponse;
+					data.pageInfo.totalPages = usersResponse.totalPages;
+				}
 			} catch (error) {
 				console.log(error);
 			}
 			break;
 		case "manufacturers":
 		case "Manufacturers":
+			try {
+				data.manufacturers = null;
+				const usersResponse = await manufacturerService.getManufacturers(page, size, query);
+				if (usersResponse) {
+					data.users = usersResponse;
+					data.pageInfo.totalPages = usersResponse.totalPages;
+				}
+			} catch (error) {
+				console.log(error);
+			}
 			// TODO: implement
 			break;
 		case "projects":
 		case "Projects":
 		default:
-			const projectResponse = await projectService.getProjects(page, size);
-			data.projects = projectResponse.content;
+			const projectResponse = await projectService.getProjects(page, size, query);
+			if (projectResponse) {
+				data.projects = projectResponse.content;
+				data.pageInfo.totalPages = projectResponse.totalPages;
+			}
 			pageType = "projects";
 			break;
 	}

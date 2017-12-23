@@ -77,7 +77,7 @@ router.post('/:id/teams/new', async (req, res, next) => {
 
 	const newTeamName = req.body.name;
 	try {
-		await teamService.getTeamByName(newTeamName);
+		await teamService.getTeamBy(newTeamName);
 	} catch (error) {
 		validationErrors.push({
 			location: "body",

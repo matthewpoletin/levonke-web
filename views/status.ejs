@@ -6,23 +6,28 @@
     <body>
         <%- include('header', {}); %>
         <div class="content">
-            <h2>STATUS</h2>
-                <div class="service">
-                    <div class="service-name">API</div>
+            <div class="pure-g status">
+                <div class="pure-u-1 title">
+                    <h2>STATUS</h2>
+                </div>
+                <div class="pure-u-1-4 service">
+                    <div class="service-name"><a href="/api#api">API</a></div>
                     <div class="service-status">OK</div>
                 </div>
-            <div class="service">
-                <div class="service-name">Elaboration</div>
-                <div class="service-status">OK</div>
+                <div class="pure-u-1-4 service">
+                    <div class="service-name"><a href="/api#elaboration">Elaboration</a></div>
+                    <div class="service-status" id="elaboration">OK</div>
+                </div>
+                <div class="pure-u-1-4 service">
+                    <div class="service-name"><a href="/api#community">Community</a></div>
+                    <div class="service-status" id="community">OK</div>
+                </div>
+                <div class="pure-u-1-4 service">
+                    <div class="service-name"><a href="/api#supply">Supply</a></div>
+                    <div class="service-status">OK</div>
+                </div>
             </div>
-            <div class="service">
-                <div class="service-name">Community</div>
-                <div class="service-status">OK</div>
-            </div>
-            <div class="service">
-                <div class="service-name">Supply</div>
-                <div class="service-status">OK</div>
-            </div>
+            <script src="/js/status.js"></script>
         </div>
         <%- include('footer', {}); %>
     </body>

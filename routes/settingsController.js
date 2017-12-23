@@ -9,7 +9,38 @@ router.get('/', async (req, res, next) => {
 	res.render('settings', {
 		projectName: config.project.name,
 		title: config.project.name,
-		user: userResponse
+		user: userResponse,
+		pageType: "main"
+	});
+});
+
+router.get('/public', async (req, res, next) => {
+	const userResponse = await auth.getCurrentUser();
+	res.render('settings', {
+		projectName: config.project.name,
+		title: config.project.name,
+		user: userResponse,
+		pageType: "public"
+	});
+});
+
+router.get('/billing', async (req, res, next) => {
+	const userResponse = await auth.getCurrentUser();
+	res.render('settings', {
+		projectName: config.project.name,
+		title: config.project.name,
+		user: userResponse,
+		pageType: "billing"
+	});
+});
+
+router.get('/notifications', async (req, res, next) => {
+	const userResponse = await auth.getCurrentUser();
+	res.render('settings', {
+		projectName: config.project.name,
+		title: config.project.name,
+		user: userResponse,
+		pageType: "notifications"
 	});
 });
 

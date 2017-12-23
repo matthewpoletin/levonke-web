@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <%- include('head', {}); %>
+    </head>
+    <body>
+        <%- include('header', {}); %>
+        <div class="content">
+            <div class="version">
+                <% if (components) { %>
+                <table class="pure-table" width="100%">
+                    <thead>
+                    <tr align="center">
+                        <th></th>
+                        <th>Manufacturer Part Number</th>
+                        <th>Manufacturer</th>
+                        <th>Type</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <% components.forEach((component, position) => { %>
+                    <tr<% if (position % 2) { %> class="pure-table-odd" <% } %>>
+                        <td align="center"><img width="25px" height="25px"></td>
+                        <td>
+                            <a href="/component/<%= component.uuid %>" <% if (!serviceOnline) { %> class="blur" <% } %>><%= component.manufacturerPartNumber %></a>
+                        </td>
+                        <% const manufacturer = manufacturers.get(component.manufacturerId);
+                        if(manufacturer) { %>
+                        <td align="center">
+                            <a href="/manufacturer/<%=component.manufacturerId%>"><%=(manufacturers.get(component.manufacturerId)).name%></a>
+                        </td>
+                        <% } else { %>
+                        <td></td>
+                        <% } %>
+                        <td align="center"></td>
+                    </tr>
+                    <% }); %>
+                    </tbody>
+                </table>
+                <% } %>
+            </div>
+        </div>
+        <%- include('footer', {}); %>
+    </body>
+</html>

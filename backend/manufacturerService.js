@@ -1,36 +1,38 @@
 const rp = require('request-promise');
-const getOptions = require('./../options');
+const config = require("./../config");
+const getOptions = require("./../options");
 
-// TODO: load api server address from config file
+const apiService = `http://${config.api.address}:${config.api.port}`;
+
 class manufacturerService {
 
-	static getManufacturers(page, size) {
-		const options = getOptions("http://localhost:8441", `/manufacturers`, { page: page, size: size }, null);
+	static getManufacturers(page, size, name) {
+		const options = getOptions(apiService, `/manufacturers`, { page: page, size: size, name: name }, null);
 		return rp.get(options);
 	}
 
-	static createManufacturer(componentRequest) {
-		const options = getOptions("http://localhost:8441", `/manufacturers`, null, componentRequest);
+	static createManufacturer(manufacturerRequest) {
+		const options = getOptions(apiService, `/manufacturers`, null, apiService);
 		return rp.post(options);
 	}
 
 	static getManufacturerById(id) {
-		const options = getOptions("http://localhost:8441", `/manufacturers/${id}`, null, null);
+		const options = getOptions(apiService, `/manufacturers/${id}`, null, null);
 		return rp.get(options);
 	}
 
 	static updateManufacturerById(id, manufacturerRequest) {
-		const options = getOptions("http://localhost:8441", `/manufacturers/${id}`, null, manufacturerRequest);
+		const options = getOptions(apiService, `/manufacturers/${id}`, null, manufacturerRequest);
 		return rp.patch(options);
 	}
 
 	static deleteManufacturerById(id) {
-		const options = getOptions("http://localhost:8441", `/manufacturers/${id}`, null, null);
+		const options = getOptions(apiService, `/manufacturers/${id}`, null, null);
 		return rp.delete(options);
 	}
 
 	static getComponentsOfManufacturer(id) {
-		const options = getOptions("http://localhost:8441", `/manufacturers/${id}/components`, null, null);
+		const options = getOptions(apiService, `/manufacturers/${id}/components`, null, null);
 		return rp.get(options);
 	}
 }

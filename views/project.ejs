@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <%- include('head', {}); %>
+    </head>
+    <body>
+        <%- include('header', {}); %>
+        <div class="content">
+            <% if (project !== null) { %>
+            <div class="project">
+                <div class="avatar">
+                    <img width="80px" height="80px" src="">
+                </div>
+                <div class="title">
+                    <h2><%=project.officialName%></h2>
+                </div>
+
+            </div>
+
+            <div class="pure-menu pure-menu-horizontal submenu">
+                <ul class="pure-menu-list">
+                    <li class="pure-menu-item">
+                        <div class="<% if (pageType === "main" ) { %>search-menu-item-selected<% } else { %>search-menu-item-blank<% }%>">
+                            <a class="pure-menu-link" href="/project/<%=project.id%>">
+                                <i class="fas fa-book"></i>&nbsp;Project
+                            </a>
+                        </div>
+                    </li>
+                    <li class="pure-menu-item">
+                        <div class="<% if (pageType === "versions" ) { %>search-menu-item-selected<% } else { %>search-menu-item-blank<% }%>">
+                            <a class="pure-menu-link" href="/project/<%=project.id%>/versions">
+                                <i class="fas fa-clipboard"></i>&nbsp;Versions
+                            </a>
+                        </div>
+                    </li>
+                    <% if (true) { %>
+                    <li class="pure-menu-item">
+                        <div class="<% if (pageType === "settings" ) { %>search-menu-item-selected<% } else { %>search-menu-item-blank<% }%>">
+                            <a class="pure-menu-link" href="/project/<%=project.id%>/settings">
+                                <i class="fas fa-cog"></i>&nbsp;Settings
+                            </a>
+                        </div>
+                    </li>
+                    <% } %>
+                </ul>
+            </div>
+
+            <% switch (pageType) {
+
+            case 'versions': %>
+            <% if (versions) { %>
+            <table class="pure-table" width="100%">
+                <thead>
+                <tr align="center">
+                    <th>Major</th>
+                    <th>Created</th>
+                    <th>Updated</th>
+                    <th>Status</th>
+                </tr>
+                </thead>
+                <tbody align="center">
+                <% versions.forEach(function(version, position) { %>
+                <tr <% if (position % 2) { %>class="pure-table-odd"<% } %>>
+                    <td><a href="/version/<%= version.id %>"><%=version.major%></a></td>
+                    <td>Date</td>
+                    <td>Date</td>
+                    <td>Active</td>
+                </tr>
+                <% }); %>
+                </tbody>
+            </table>
+            <% } %>
+            <% break;
+
+            case 'settings': %>
+            <% if (isAuthorized) { %>
+            <form class="pure-form pure-form-stacked">
+                <fieldset>
+                    <legend>Settings</legend>
+
+                    <img width="80px" height="80px" src="">
+                    <label for="file">Choose image to upload</label>
+                    <input type="file" name="picField" id="picField" size="24" onchange="preview_2(this);" alt=""/>
+
+                    <legend>Settings</legend>
+                    <label for="name">Name</label>
+                    <input class="pure-input-1" id="name" type="text" placeholder="Name" value="<%=project.name%>" required>
+                    <span class="pure-form-message">This is a required field.</span>
+
+                    <label for="description">Description</label>
+                    <textarea class="pure-input-1" id="description" placeholder="Description"></textarea>
+
+                    <button type="submit" id="submit" class="pure-button pure-input-1 pure-button-primary" style="background-color: #00ad00" disabled>Save</button>
+
+                    <!--TODO: add padding in css-->
+                    <br><br>
+                    <legend>Danger zone</legend>
+                    <button type="button" class="pure-button pure-input-1">Delete project</button>
+                </fieldset>
+            </form>
+            <% } %>
+            <% break;
+
+            case 'main':
+            default: %>
+
+            <% } %>
+
+            <% } %>
+        </div>
+        <%- include('footer', {}); %>
+    </body>
+</html>

@@ -10,14 +10,12 @@
 
                 <div class="menu">
                     <!--TODO: force saving current search type-->
-                    <div class="">
+                    <div class="bar">
                         <form class="pure-form" accept-charset="UTF-8" method="get" action="/search?type=users">
                             <input name="q" type="text" class="pure-input-rounded pure-input-1" placeholder="Search" value="<%=query%>">
                         </form>
-                        <!--TODO: add padding in css-->
-                        <br>
                     </div>
-                    <div class="pure-menu pure-menu-horizontal organization-submenu">
+                    <div class="pure-menu pure-menu-horizontal submenu">
                         <ul class="pure-menu-list">
                             <li class="pure-menu-item">
                                 <div class="<% if (pageType === "projects" ) { %>search-menu-item-selected<% } else { %>search-menu-item-blank<% }%>">
@@ -60,53 +58,66 @@
                     <br>
                 </div>
 
-                <% if (pageType === "projects") { %>
+                <% switch (pageType) {
 
-                <% } %>
-
-                <% if (pageType === "teams") { %>
+                case 'teams': %>
                 <% if(teams !== null) { %>
-                <div class="organizations">
+                <div class="teams">
                     <% teams.forEach((team) => { %>
-                    <div class="pure-g user">
-                        <div class="pure-u-1-3"><img width="25px" height="25px" src=""></div>
+                    <div class="pure-g team">
+                        <div class="pure-u-1-3"><img width="25px" height="25px"></div>
                         <div class="pure-u-2-3"><a href="/team/<%=team.id%>"><%=team.name%></a></div>
                     </div>
                     <% }); %>
                 </div>
                 <% } %>
-                <% } %>
+                <% break;
 
-                <% if (pageType === "organizations") { %>
-                <% if(organizations !== null) { %>
+                case 'organizations': %>
+                <% if (organizations !== null) { %>
                 <div class="organizations">
                 <% organizations.forEach((organization) => { %>
                     <div class="pure-g user">
-                        <div class="pure-u-1-3"><img width="25px" height="25px" src=""></div>
+                        <div class="pure-u-1-3"><img width="25px" height="25px"></div>
                         <div class="pure-u-2-3"><a href="/organization/<%=organization.id%>"><%=organization.name%></a></div>
                     </div>
                 <% }); %>
                 </div>
                 <% } %>
-                <% } %>
+                <% break;
 
-                <% if (pageType === "users") { %>
-                <% if(users.content) { %>
+                case 'users': %>
+                <% if (users.content) { %>
                 <div class="users">
                     <% users.content.forEach((user) => { %>
                     <div class="pure-g user">
-                        <div class="pure-u-1-3"><a href="/user/<%=user.username%>"><img width="25px" height="25px" src=""></a></div>
+                        <div class="pure-u-1-3"><a href="/user/<%=user.username%>"><img width="25px" height="25px"></a></div>
                         <div class="pure-u-2-3"><a href="/user/<%=user.username%>"><%=user.username%></a></div>
                     </div>
                     <% }); %>
                 </div>
-
-                <% } %>
                 <% } %>
 
-                <% if (pageType === "manufacturers") { %>
+                <% break;
 
-                <% } %>
+                case 'manufacturers': %>
+
+                <% break;
+
+                case 'projects':
+                default: %>
+                <div class="projects">
+                    <% projects.forEach((project) => { %>
+                    <div class="pure-g user">
+                        <div class="pure-u-1-3"><a href="/project/<%=project.id%>"><img width="25px" height="25px"></a></div>
+                        <div class="pure-u-2-3"><a href="/project/<%=project.id%>"><%=project.name%></a></div>
+                    </div>
+                    <% }); %>
+                </div>
+                <% break;
+
+                } %>
+
                 <% if (pageInfo.totalPages > 0) { %>
                 <div class="navigation">
                     <% for(let page=0; page < pageInfo.totalPages; page++) { %>
@@ -114,7 +125,6 @@
                     <% } %>
                 </div>
                 <% } %>
-
             </div>
         </div>
         <%- include('footer', {}); %>

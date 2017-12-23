@@ -23,12 +23,12 @@ nameInput.addEventListener("change", (e) => {
 					nameValid = false;
 				} catch (error) {
 					e.target.classList.remove("error");
-					parent.querySelector("span").innerHTML = "";
+					parent.querySelector("span").innerHTML = " ";
 					nameValid = true;
 				}
 			} else {
 				e.target.classList.remove("error");
-				parent.querySelector("span").innerHTML = e.target.value.length ? "" : "This is a required field" ;
+				parent.querySelector("span").innerHTML = e.target.value.length ? " " : "This is a required field" ;
 				nameValid = false;
 			}
 		}

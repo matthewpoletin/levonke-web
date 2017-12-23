@@ -6,141 +6,144 @@
     <body>
         <%- include('header', {}); %>
         <div class="content">
-            <% if (pageType !== "teams-new") { %>
-            <% if (organization) { %>
+            <div class="organization">
+                <% if (pageType !== "teams-new") { %>
+                <% if (organization) { %>
 
-            <div class="pure-g" style="max-width:800px;margin:0 auto;">
-                <div class="pure-u-1-4">
-                    <img width="100px" height="100px" src="">
+                <div class="pure-g info">
+                    <div class="pure-u-1-4 avatar">
+                        <img width="100px" height="100px">
+                    </div>
+                    <div class="pure-u-3-4">
+                        <h2><%= organization.name %></h2>
+                        <p><%= organization.description %></p>
+                        <p><a href="mailto:<%= organization.pubEmail %>"><%= organization.pubEmail %></a></p>
+                        <p><a href="http://<%= organization.website %>"><%= organization.website %></a></p>
+                    </div>
                 </div>
-                <div class="pure-u-3-4">
-                    <h2><%= organization.name %></h2>
-                    <p>Description: <%= organization.description %></p>
-                    <p>Public email: <%= organization.pubEmail %></p>
-                    <p>Website: <a href="http://<%= organization.website %>"><%= organization.website %></a></p>
-                </div>
-            </div>
 
-            <div class="pure-menu pure-menu-horizontal organization-submenu">
-                <ul class="pure-menu-list">
-                    <li class="pure-menu-item">
-                        <a class="pure-menu-link" href="/organization/<%= organization.id %>/teams">
-                            <i class="fas fa-users"></i>&nbsp;Teams
-                        </a>
-                    </li>
-                    <li class="pure-menu-item">
-                        <a class="pure-menu-link" href="/organization/<%= organization.id %>/settings">
-                            <i class="fa fa-cog"></i>&nbsp;Settings
-                        </a>
-                    </li>
-                </ul>
-            </div>
-            <!--TODO: add padding in css-->
-            <br>
-            <% } %>
-            <% } %>
-
-            <% if (pageType === "main") { %>
-            <% if (owner) { %>
-            <p>Owner: <a href="/user/<%= owner.username %>"><%= owner.username %></a></p>
-            <% } %>
-            <% } %>
-
-            <% if (pageType === "teams") { %>
-            <div class="pure-g">
-                <div class="pure-u-1-2">
-                    <form class="pure-form">
-                        <input type="text" class="pure-input-rounded">
-                    </form>
+                <div class="pure-menu pure-menu-horizontal submenu">
+                    <ul class="pure-menu-list">
+                        <li class="pure-menu-item">
+                            <a class="pure-menu-link" href="/organization/<%= organization.id %>/teams">
+                                <i class="fas fa-users"></i>&nbsp;Teams
+                            </a>
+                        </li>
+                        <li class="pure-menu-item">
+                            <a class="pure-menu-link" href="/organization/<%= organization.id %>/settings">
+                                <i class="fa fa-cog"></i>&nbsp;Settings
+                            </a>
+                        </li>
+                    </ul>
                 </div>
-                <div class="pure-u-1-2 new-team" align="right">
-                    <a class="pure-button" href="/organization/<%=organization.id%>/teams/new">New team</a>
-                </div>
-                <div class="pure-u-1">
-                <!--TODO: add padding in css-->
-                <br>
-                <% if (teams) { %>
-                <table class="pure-table" width="100%">
-                    <thead>
-                    <tr align="center">
-                        <th></th>
-                        <th>Name</th>
-                        <th>Head</th>
-                    </tr>
-                    </thead>
-                    <tbody align="center">
-                        <% teams.forEach(function(team, position) { %>
-                        <tr <% if (position % 2) { %>class="pure-table-odd"<% } %>>
-                            <!--TODO: add avatar support to team-->
-                            <td>*avatar*</td>
-                            <td><a href="/team/<%= team.id %>"><%= team.name %></a></td>
-                            <!--TODO: add head of team support in db-->
-                            <td><a href="/user/*username*">*username*</a></td>
-                        </tr>
-                        <% }); %>
-                    </tbody>
-                </table>
                 <% } %>
+                <% } %>
+
+                <% switch (pageType) {
+                case 'teams': %>
+                <div class="teams">
+                    <div class="pure-g control">
+                        <div class="pure-u-1-2">
+                            <form class="pure-form">
+                                <input type="text" class="pure-input-rounded">
+                            </form>
+                        </div>
+                        <div class="pure-u-1-2 new-team" align="right">
+                            <a class="pure-button" href="/organization/<%=organization.id%>/teams/new">New team</a>
+                        </div>
+                    </div>
+                    <div class="pure-u-1">
+                    <% if (teams) { %>
+                        <table class="pure-table" width="100%">
+                            <thead>
+                            <tr align="center">
+                                <th></th>
+                                <th>Name</th>
+                                <th>Head</th>
+                            </tr>
+                            </thead>
+                            <tbody align="center">
+                                <% teams.forEach(function(team, position) { %>
+                                <tr <% if (position % 2) { %>class="pure-table-odd"<% } %>>
+                                    <td><img width="25px" height="25px"></td>
+                                    <td><a href="/team/<%= team.id %>"><%= team.name %></a></td>
+                                    <!--TODO: add head of team support in db-->
+                                    <td><a href="/user/*username*">*username*</a></td>
+                                </tr>
+                                <% }); %>
+                            </tbody>
+                        </table>
+                    <% } %>
+                    </div>
                 </div>
+
+                <% break;
+
+                case 'teams-new': %>
+                <h2>Create new team</h2>
+                <p>Team is assigned on creating new awesome projects</p>
+                <form class="pure-form pure-form-stacked" action="/organization/<%=organization.id%>/teams/new" method="POST">
+                    <fieldset>
+                        <legend></legend>
+
+                        <label for="name">Name</label>
+                        <input class="pure-input-1" id="name" name="name" type="text" placeholder="Name">
+                        <span class="pure-form-message">This is a required field.</span>
+
+                        <label for="description">Description</label>
+                        <s><textarea class="pure-input-1" id="description" name="description" placeholder="Description"></textarea></s>
+
+                        <button type="submit" id="submit" class="pure-button pure-input-1 pure-button-primary" disabled>Save</button>
+                    </fieldset>
+                </form>
+                <script src="/js/team.js"></script>
+                <% break;
+
+                case 'settings': %>
+                <form class="pure-form pure-form-stacked" accept-charset="UTF-8" method="post" action="/organization/<%=organization.id%>">
+                    <fieldset>
+                        <legend>Settings</legend>
+
+                        <label for="name">Name</label>
+                        <input class="pure-input-1" id="name" type="text" placeholder="Name" value="<%=organization.name%>" required>
+                        <span class="pure-form-message">This is a required field.</span>
+
+                        <label for="officialName">Official name</label>
+                        <input id="officialName" name="officialName" class="pure-input-1" type="text" placeholder="Official name" value="<%=organization.officialName%>">
+
+                        <label for="description">Description</label>
+                        <textarea class="pure-input-1" id="description" name="description" placeholder="Description" style="resize: none"><%=organization.description%></textarea>
+
+                        <label for="pubEmail">Public email</label>
+                        <input id="pubEmail" class="pure-input-1" type="email" placeholder="Public email" value="<%=organization.pubEmail%>">
+
+                        <label for="website">Website</label>
+                        <input id="website" class="pure-input-1" type="text" placeholder="Website" value="<%=organization.website%>">
+                        <!--TODO: add padding in css-->
+                        <br><br>
+
+                        <button type="submit" id="submit" class="pure-button pure-input-1 pure-button-primary">Save</button>
+                    </fieldset>
+                </form>
+
+                <form class="pure-form pure-form-stacked" accept-charset="UTF-8" method="post" action="/organizations/<%=organization.id%>/delete">
+                    <fieldset>
+                        <legend>Danger zone</legend>
+                        <button type="submit" class="pure-button pure-input-1 danger">Delete organization</button>
+                    </fieldset>
+                </form>
+                <script src="/js/organization.js"></script>
+                <% break;
+
+                case 'main':
+                default: %>
+                <% break;
+
+
+                } %>
             </div>
-            <% } %>
 
-            <% if (pageType === "teams-new") { %>
-            <h2>Create new team</h2>
-            <p>Team is assigned on creating new awesome projects</p>
-            <form class="pure-form pure-form-stacked" action="/organization/<%=organization.id%>/teams/new" method="POST">
-                <fieldset>
-                    <legend></legend>
-
-                    <label for="name">Name</label>
-                    <input class="pure-input-1" id="name" name="name" type="text" placeholder="Name">
-                    <span class="pure-form-message">This is a required field.</span>
-
-                    <label for="description">Description</label>
-                    <s><textarea class="pure-input-1" id="description" name="description" placeholder="Description"></textarea></s>
-
-                    <button type="submit" id="submit" class="pure-button pure-input-1 pure-button-primary" disabled>Save</button>
-                </fieldset>
-            </form>
-            <script src="/js/team.js"></script>
-            <% } %>
-
-            <% if (pageType === "settings") { %>
-            <form class="pure-form pure-form-stacked" accept-charset="UTF-8" method="post" action="/organization/<%=organization.id%>">
-                <fieldset>
-                    <legend>Settings</legend>
-
-                    <label for="name">Name</label>
-                    <input class="pure-input-1" id="name" type="text" placeholder="Name" value="<%=organization.name%>" required>
-                    <span class="pure-form-message">This is a required field.</span>
-
-                    <label for="officialName">Official name</label>
-                    <input id="officialName" name="officialName" class="pure-input-1" type="text" placeholder="Official name" value="<%=organization.officialName%>">
-
-                    <label for="description">Description</label>
-                    <textarea class="pure-input-1" id="description" name="description" placeholder="Description" style="resize: none"><%=organization.description%></textarea>
-
-                    <label for="pubEmail">Public email</label>
-                    <input id="pubEmail" class="pure-input-1" type="email" placeholder="Public email" value="<%=organization.pubEmail%>">
-
-                    <label for="website">Website</label>
-                    <input id="website" class="pure-input-1" type="text" placeholder="Website" value="<%=organization.website%>">
-                    <!--TODO: add padding in css-->
-                    <br><br>
-
-                    <button type="submit" id="submit" class="pure-button pure-input-1 pure-button-primary">Save</button>
-                </fieldset>
-            </form>
-
-            <form class="pure-form pure-form-stacked" accept-charset="UTF-8" method="post" action="/organizations/<%=organization.id%>/delete">
-                <fieldset>
-                    <legend>Danger zone</legend>
-                    <button type="submit" class="pure-button pure-input-1">Delete organization</button>
-                </fieldset>
-            </form>
-            <% } %>
         </div>
         <%- include('footer', {}); %>
-        <script src="/js/team.js"></script>
     </body>
 </html>

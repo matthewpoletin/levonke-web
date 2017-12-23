@@ -21,7 +21,7 @@
                 <tbody>
                     <% users.forEach(function(user, position) { %>
                     <tr <% if (position % 2) { %>class="pure-table-odd"<% } %>>
-                        <td align="center"><img width="25px" height="25px" style="background-color:wheat"></td>
+                        <td align="center"><img width="25px" height="25px"></td>
                         <td><a href="/user/<%= user.username.toLowerCase() %>"><%= user.username %></a></td>
                         <td><%= user.forename %></td>
                         <td><%= user.surname %></td>
