@@ -8,11 +8,17 @@ class auth {
 	 */
 	static getCurrentUser() {
 		// TODO: [AUTH] change to real one
-		const username = "MatthewPoletin";
+		// const username = "MatthewPoletin";
+		// try {
+		// 	return userService.getUserBy({username});
+		// } catch (error) {
+		// 	console.log(`Error: user ${username} not found`);
+		// }
+		const userId = 1;
 		try {
-			return userService.getUserBy({username});
+			return userService.getUserById(userId);
 		} catch (error) {
-			console.log(`Error: user ${username} not found`);
+			console.log(`Error: user {userId: ${userId}} not found`);
 		}
 	}
 

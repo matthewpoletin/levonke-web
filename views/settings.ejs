@@ -20,39 +20,28 @@
 
                     case 'public': %>
                     <form class="pure-form pure-form-stacked">
-
                         <fieldset>
-                            <div class="pure-control-group">
-                                <label for="name">Username</label>
-                                <input class="pure-input-1" id="username" type="text" placeholder="Username" value="<%=user.username%>">
-                                <span class="pure-form-message-inline">This is a required field.</span>
-                            </div>
-
-                            <div class="pure-control-group">
-                                <label for="regEmail">Email Address</label>
-                                <input class="pure-input-1" id="regEmail" type="email" placeholder="Email Address" value="<%=user.regEmail%>">
-                                <span class="pure-form-message-inline">This is a required field.</span>
-                            </div>
-
-                            <div class="pure-control-group">
-                                <label for="name">Name</label>
-                                <input class="pure-input-1" id="name" type="text" placeholder="Name" value="<%=user.forename%>">
-                            </div>
-
-                            <div class="pure-control-group">
-                                <label for="surname">Surname</label>
-                                <input class="pure-input-1" id="surname" type="text" placeholder="Surname" value="<%=user.surname%>">
-                            </div>
-
+                            <legend></legend>
                             <div class="pure-control-group">
                                 <label for="pubEmail">Public email</label>
                                 <input class="pure-input-1" id="pubEmail" type="email" placeholder="Public email" value="<%=user.pubEmail%>">
                             </div>
-
-                            <button type="submit" class="pure-button pure-input-1 pure-button-primary" disabled>Update</button>
                         </fieldset>
-                    </form>
+                        <fieldset>
+                            <legend>Social</legend>
+                            <div class="pure-control-group">
+                                <label for="name">Facebook</label>
+                                <input class="pure-input-1" id="facebook" type="text" placeholder="Facebook" value="<%=user.fbLink%>">
+                            </div>
 
+                            <div class="pure-control-group">
+                                <label for="name">GitHub</label>
+                                <input class="pure-input-1" id="name" type="text" placeholder="Name" value="<%=user.ghLink%>">
+                            </div>
+                        </fieldset>
+                        <button type="submit" class="pure-button pure-input-1 pure-button-primary" disabled>Update</button>
+                    </form>
+                    <script src="/js/settings-public.js"></script>
                     <% break;
 
                     case 'billing': %>
@@ -65,75 +54,74 @@
 
                     case 'main':
                     default: %>
-                        <form class="pure-form pure-form-stacked">
+                        <form class="pure-form pure-form-stacked"  method="post" accept-charset="UTF-8" action="/settings" autocomplete="off" id="settings-personal-info-form">
                             <fieldset>
-                                <img width="80px" height="80px">
+                                <img width="80px" height="80px" src="<%=user.avatar%>">
                                 <div class="pure-control-group">
                                     <label for="file">Choose image to upload</label>
-                                    <input class="pure-input-1" type="file" name="picField" id="picField" size="24" onchange="preview_2(this);" alt=""/>
+                                    <input class="pure-input-1" type="file" name="avatar" id="avatar" size="24" onchange="preview_2(this);" alt="" disabled>
                                 </div>
                             </fieldset>
                             <fieldset>
                                 <div class="pure-control-group">
                                     <label for="name">Username</label>
-                                    <input class="pure-input-1" id="username" type="text" placeholder="Username" value="<%=user.username%>">
+                                    <input class="pure-input-1" id="username" name="username" type="text" placeholder="Username" value="<%=user.username%>">
                                     <span class="pure-form-message-inline">This is a required field.</span>
                                 </div>
 
                                 <div class="pure-control-group">
                                     <label for="regEmail">Email Address</label>
-                                    <input class="pure-input-1" id="regEmail" type="email" placeholder="Email Address" value="<%=user.regEmail%>">
+                                    <input class="pure-input-1" id="regEmail" name="regEmail" type="email" placeholder="Email Address" value="<%=user.regEmail%>">
                                     <span class="pure-form-message-inline">This is a required field.</span>
                                 </div>
 
                                 <div class="pure-control-group">
                                     <label for="name">Name</label>
-                                    <input class="pure-input-1" id="name" type="text" placeholder="Name" value="<%=user.forename%>">
+                                    <input class="pure-input-1" id="forename" name="forename" type="text" placeholder="Name" value="<%=user.forename%>">
                                 </div>
 
                                 <div class="pure-control-group">
                                     <label for="surname">Surname</label>
-                                    <input class="pure-input-1" id="surname" type="text" placeholder="Surname" value="<%=user.surname%>">
+                                    <input class="pure-input-1" id="surname" name="surname" type="text" placeholder="Surname" value="<%=user.surname%>">
                                 </div>
 
-                                <!--<div class="pure-control-group">-->
-                                    <!--<label for="pubEmail">Public email</label>-->
-                                    <!--<input class="pure-input-1" id="pubEmail" type="email" placeholder="Public email" value="<%=user.pubEmail%>">-->
-                                <!--</div>-->
-
+                                <button type="submit" id="submitInfo" class="pure-button pure-input-1 pure-button-primary" disabled>Update</button>
                             </fieldset>
+                        </form>
+                        <form class="pure-form pure-form-stacked" accept-charset="UTF-8" method="post" action="/user/<%=user.username.toLowerCase()%>/delete">
                             <fieldset>
                                 <legend>Update password</legend>
 
                                 <div class="pure-control-group">
                                     <label for="password">Previous Password</label>
-                                    <input class="pure-input-1" id="password" type="password" placeholder="Password" value="<%=user.password%>">
+                                    <input class="pure-input-1" name="oldPassword" id="oldPassword" type="password" placeholder="Password">
                                     <span class="pure-form-message-inline">This is a required field.</span><br>
                                 </div>
 
                                 <div class="pure-control-group">
                                     <label for="password">New Password</label>
-                                    <input class="pure-input-1" id="password" type="password" placeholder="Password" value="<%=user.password%>">
+                                    <input class="pure-input-1" name="newPassword" id="newPassword" type="password" placeholder="Password">
                                     <span class="pure-form-message-inline">This is a required field.</span><br>
                                 </div>
 
                                 <div class="pure-control-group">
                                     <label for="password">New Password again</label>
-                                    <input class="pure-input-1" id="password" type="password" placeholder="Password" value="<%=user.password%>">
+                                    <input class="pure-input-1" id="newPasswordCheck" type="password" placeholder="Password">
                                     <span class="pure-form-message-inline">This is a required field.</span><br>
                                 </div>
 
-                                <button type="submit" class="pure-button pure-input-1 pure-button-primary" disabled>Update</button>
+                                <button type="submit" id="submitPassword" class="pure-button pure-input-1 pure-button-primary" disabled>Update</button>
                             </fieldset>
                         </form>
                         <form class="pure-form pure-form-stacked" accept-charset="UTF-8" method="post" action="/user/<%=user.username.toLowerCase()%>/delete">
                             <fieldset>
                                 <legend>Danger zone</legend>
-                                <button type="submit" class="pure-button pure-input-1 danger">Delete account</button>
+                                <button type="submit" id="submitDelete" class="pure-button pure-input-1 danger">Delete account</button>
                             </fieldset>
                         </form>
+                        <script src="/js/settings-personal.js"></script>
+                        <% } %>
                     </div>
-                    <% } %>
                 </div>
 
             <!--<% if (user.fbLink) { %>-->

@@ -1,9 +1,12 @@
+"use strict";
+
 const index = require('./routes/indexController');
 
 const dashboard = require('./routes/dashboardController');
 
 const login = require('./routes/loginController');
 const join = require('./routes/joinController');
+const signout = require('./routes/signoutController');
 
 const settings = require('./routes/settingsController');
 
@@ -29,6 +32,7 @@ const components = require('./routes/componentsController');
 const manufacturer = require('./routes/manufacturerController');
 const manufacturers = require('./routes/manufacturersController');
 
+
 function router(app) {
 	app.use('/', index);
 
@@ -36,6 +40,7 @@ function router(app) {
 
 	app.use('/join', join);
 	app.use('/login', login);
+	app.use('/signout', signout);
 
 	app.use('/settings', settings);
 

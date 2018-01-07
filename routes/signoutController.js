@@ -4,10 +4,8 @@ const config = require("./../config");
 const auth = require("./../auth");
 
 router.get('/', function(req, res, next) {
-	res.render('login', {
-		projectName: config.project.name,
-		title: config.project.name
-	});
+
+	res.redirect('/');
 });
 
 module.exports = router;

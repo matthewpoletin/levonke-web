@@ -309,6 +309,13 @@ a:hover {
     align-content: right;
 }
 
+
+/* Team */
+.team .submenu {
+    margin-bottom: 20px;
+
+}
+
 .team .new-project {
     /*align-content: right;*/
     margin: 10px;

@@ -9,11 +9,15 @@ const userService = require("./../backend/userService");
  * Render join page
  */
 router.get('/', (req, res, next) => {
-	res.render('join', {
-		projectName: config.project.name,
-		title: config.project.name + " | Join",
-		pageType: "main"
-	});
+	if (!auth.isAuth()) {
+		res.render('join', {
+			projectName: config.project.name,
+			title: config.project.name + " | Join",
+			pageType: "main"
+		});
+	} else {
+		res.redirect('/');
+	}
 });
 
 /**
@@ -32,7 +36,7 @@ router.post('/', async (req, res, next) => {
 	const username = req.body.username;
 	if (!errors) {
 		try {
-			const userByUsernameResponse = userService.getUserBy(username);
+			const userByUsernameResponse = userService.getUserBy({ username: username });
 			if (userByUsernameResponse.username === username) errors.username = "Username already taken";
 		} catch (error) {
 			console.log("Error: couldn't find user " + username)
@@ -40,10 +44,10 @@ router.post('/', async (req, res, next) => {
 
 		const email = req.body.email;
 		try {
-			const userByEmailResponse = userService.getUserByEmail(email);
+			const userByEmailResponse = userService.getUserBy({ regEmail: email });
 			if (userByEmailResponse.email === email) errors.email = "Email already taken";
 		} catch (error) {
-			console.log("Error: couldn't find user " + email)
+			console.log(`Error: couldn't find user {regEmail: email}`)
 		}
 	}
 	if (errors) {
