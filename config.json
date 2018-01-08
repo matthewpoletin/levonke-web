@@ -8,5 +8,6 @@
   "api": {
     "address": "localhost",
     "port": 8441
-  }
+  },
+  "noauthcheck": [ "/public/*", "/path/to/loginpage" ]
 }
