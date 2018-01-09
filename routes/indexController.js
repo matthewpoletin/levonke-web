@@ -8,16 +8,18 @@ const auth = require("./../auth");
 /**
  * Render index dashboard page
  */
-router.get('/', (req, res, next) => {
-	const pageType = "main";
-	if (!auth.isAuth()) {
-		const pageType = "landing";
-	}
-	res.render('dashboard', {
+//TODO: match index and dashboard controllers
+router.get('/', async (req, res, next) => {
+	const isAuth = !!req["accessToken"];
+	const authUser = await auth.getCurrentUser(req["accessToken"]);
+	const data = {
 		projectName: config.project.name,
+		isAuth: isAuth,
+		authUser: authUser,
 		title: config.project.name,
-		pageType: pageType
-	});
+		pageType: "main",
+	};
+	res.render('dashboard', data);
 });
 
 module.exports = router;

@@ -5,30 +5,35 @@ const router = express.Router();
 const config = require("./../config");
 const auth = require("./../auth");
 const errorHandler = require("./abstractController");
-const userService = require("./../backend/userService");
-// const projectService = require("./../backend/projectService");
-// const teamService = require("./../backend/projectService");
 
-router.get('/', function(req, res, next) {
+router.get('/',	async (req, res, next) => {
+	const isAuth = !!req["accessToken"];
+	const authUser = await auth.getCurrentUser(req["accessToken"]);
+	const data = {
+		projectName: config.project.name,
+		isAuth: isAuth,
+		authUser: authUser,
+		title: config.project.name,
+		pageType: "main",
+	};
 	try {
-		const user = auth.getCurrentUser();
 		// TODO: make api support
 		// userService.getProjectsOfUser(user.id);
-		res.render('dashboard', {
-			projectName: config.project.name,
-			title: config.project.name,
-			pageType: "main"
-		});
+		res.render('dashboard', data);
 	} catch (error) {
 		errorHandler(error, req, res, next);
 	}
 });
 
-router.get('/discover', function(req, res, next) {
+router.get('/discover', async (req, res, next) => {
+	const isAuth = !!req["accessToken"];
+	const authUser = await auth.getCurrentUser(req["accessToken"]);
 	try {
 		const user = auth.getCurrentUser();
 		res.render('dashboard', {
 			projectName: config.project.name,
+			isAuth: isAuth,
+			authUser: authUser,
 			title: config.project.name,
 			pageType: "discover"
 		});

@@ -1,3 +1,5 @@
+"use strict";
+
 const express = require('express');
 const router = express.Router();
 const config = require("./../config");
@@ -10,15 +12,19 @@ const userService = require("./../backend/userService");
  * Render list of all organizations
  */
 router.get('/', async (req, res, next) => {
+	const isAuth = !!req["accessToken"];
+	const authUser = await auth.getCurrentUser(req["accessToken"]);
 	const page = parseInt(req.query.page, 10) || 0;
 	const size = parseInt(req.query.size, 10) || 25;
 	try {
-		const organizationsResponse = await organizationService.getOrganizations(page, size);
+		const organizationsResponse = await organizationService.getOrganizations(req["accessToken"], page, size);
 		res.render('organizations', {
 			projectName: config.project.name,
+			isAuth: isAuth,
+			authUser: authUser,
 			title: config.project.name + " | Organizations",
 			organizations: organizationsResponse.content,
-			pageType: "main"
+			pageType: "main",
 		});
 	} catch (error) {
 		errorHandler(error, req, res, next);
@@ -29,14 +35,18 @@ router.get('/', async (req, res, next) => {
  * Render create new organization
  */
 router.get('/new', async (req, res, next) => {
+	const isAuth = !!req["accessToken"];
+	const authUser = await auth.getCurrentUser(req["accessToken"]);
 	const page = parseInt(req.query.page, 10) || 0;
 	const size = parseInt(req.query.size, 10) || 25;
-	const organizationsResponse = await organizationService.getOrganizations(page, size);
+	const organizationsResponse = await organizationService.getOrganizations(req["accessToken"], page, size);
 	res.render('organizations', {
 		projectName: config.project.name,
+		isAuth: isAuth,
+		authUser: authUser,
 		title: config.project.name + " | Organizations",
 		organizations: organizationsResponse,
-		pageType: "new"
+		pageType: "new",
 	});
 });
 
@@ -68,7 +78,7 @@ router.post('/new', async (req, res, next) => {
 				const owner = auth.getCurrentUser();
 				organizationRequest.ownerId = owner.id;
 			}
-			const organizationResponse = await organizationService.createOrganization(organizationRequest);
+			const organizationResponse = await organizationService.createOrganization(req["accessToken"], organizationRequest);
 			res.redirect('/organization/' + organizationResponse.id);
 
 		} catch (error) {
@@ -83,7 +93,7 @@ router.post('/new', async (req, res, next) => {
 router.post('/:id/delete', async (req, res, next) => {
 	const organizationId = parseInt(req.params.id, 10);
 	try {
-		const organizationResponse = organizationService.getOrganizationById(organizationId);
+		const organizationResponse = organizationService.getOrganizationById(req["accessToken"], organizationId);
 		// TODO: check for organization ownership
 		if (organizationResponse) {
 			organizationService.deleteOrganizationById(organizationId);

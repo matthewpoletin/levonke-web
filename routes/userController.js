@@ -1,34 +1,30 @@
 const express = require('express');
 const router = express.Router();
-const config = require('./../config');
+const config = require("./../config");
+const auth = require("./../auth");
+const errorHandler = require("./abstractController");
 const userService = require("./../backend/userService");
 
 router.get('/:username', async (req, res, next) => {
+	const isAuth = !!req["accessToken"];
+	const authUser = await auth.getCurrentUser(req["accessToken"]);
 	const data = {
 		projectName: config.project.name,
-		title: config.project.name
+		title: config.project.name,
+		isAuth: isAuth,
+		authUser: authUser,
 	};
 	const username = req.params.username;
 	try {
-		const userResponse = await userService.getUserBy({username});
-		if (userResponse) {
-			const teams = await userService.getTeams(userResponse.id);
-			data.title = config.project.name + " | " + userResponse.username;
-			data.user = userResponse;
-			data.teams = teams;
-			res.render('user', data);
-		} else {
-			const info = `User ${username} not found`;
-			data.title = `${config.project.name} | 404`;
-			data.message = info;
-			data.error = {
-				status: "404",
-				stack: ""
-			};
-			res.render('error', data);
-		}
+		const userResponse = await userService.getUserBy(req["accessToken"], {username: username});
+		data.user = userResponse;
+		data.title = config.project.name + " | " + userResponse.username;
+		const teams = await userService.getTeams(req["accessToken"], userResponse.id);
+		if (teams) data.teams = teams;
+		else data.teams = null;
+		res.render('user', data);
 	} catch (error) {
-		console.log(error);
+		errorHandler(error, req, res, next);
 	}
 });
 

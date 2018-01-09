@@ -9,14 +9,17 @@ const userService = require("./../backend/userService");
  * Render join page
  */
 router.get('/', (req, res, next) => {
-	if (!auth.isAuth()) {
-		res.render('join', {
+	const isAuth = !!req["accessToken"];
+	if (isAuth) {
+		const data = {
 			projectName: config.project.name,
 			title: config.project.name + " | Join",
-			pageType: "main"
-		});
+			pageType: "main",
+			isAuth
+		};
+		res.render('join', data);
 	} else {
-		res.redirect('/');
+		// res.redirect("/");
 	}
 });
 
@@ -36,7 +39,7 @@ router.post('/', async (req, res, next) => {
 	const username = req.body.username;
 	if (!errors) {
 		try {
-			const userByUsernameResponse = userService.getUserBy({ username: username });
+			const userByUsernameResponse = userService.getUserBy(req["accessToken"], { username: username });
 			if (userByUsernameResponse.username === username) errors.username = "Username already taken";
 		} catch (error) {
 			console.log("Error: couldn't find user " + username)
@@ -44,7 +47,7 @@ router.post('/', async (req, res, next) => {
 
 		const email = req.body.email;
 		try {
-			const userByEmailResponse = userService.getUserBy({ regEmail: email });
+			const userByEmailResponse = userService.getUserBy(req["accessToken"], { regEmail: email });
 			if (userByEmailResponse.email === email) errors.email = "Email already taken";
 		} catch (error) {
 			console.log(`Error: couldn't find user {regEmail: email}`)
@@ -61,7 +64,7 @@ router.post('/', async (req, res, next) => {
 			password: req.body.password
 		};
 		try {
-			const userResponse = await userService.createUser(userRequest);
+			const userResponse = await userService.createUser(req["accessToken"], userRequest);
 			auth.setCurrentUser(userResponse);
 			res.redirect('/join/info')
 		} catch (error) {
@@ -74,10 +77,12 @@ router.post('/', async (req, res, next) => {
  *
  */
 router.get('/info', function(req, res, next) {
+	const isAuth = !!req["accessToken"];
 	res.render('join', {
 		projectName: config.project.name,
 		title: config.project.name + " | Info",
 		pageType: "info",
+		isAuth
 	});
 });
 
@@ -111,7 +116,7 @@ router.post('/info', async (req, res, next) => {
 				console.log("Error: user not found");
 			}
 			else {
-				const userResponse = await userService.updateUserById(userId, userRequest);
+				const userResponse = await userService.updateUserById(req["accessToken"], userId, userRequest);
 			}
 			auth.setCurrentUser(userResponse);
 			// TODO: set auth info to user
@@ -126,10 +131,12 @@ router.post('/info', async (req, res, next) => {
  * Render user set personalization page
  */
 router.get('/personalize', function(req, res, next) {
+	const isAuth = !!req["accessToken"];
 	res.render('join', {
 		projectName: config.project.name,
 		title: config.project.name + " | Personalize",
 		pageType: "personalize",
+		isAuth: isAuth
 	});
 });
 

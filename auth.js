@@ -1,24 +1,25 @@
+"use strict";
+
+const authService = require("./backend/authService");
 const userService = require("./backend/userService");
 
 class auth {
 
 	/**
 	 *
-	 * @return {{userResponse}}
+	 * @param accessToken
+	 * @return {*}
 	 */
-	static getCurrentUser() {
-		// TODO: [AUTH] change to real one
-		// const username = "MatthewPoletin";
-		// try {
-		// 	return userService.getUserBy({username});
-		// } catch (error) {
-		// 	console.log(`Error: user ${username} not found`);
-		// }
-		const userId = 1;
-		try {
-			return userService.getUserById(userId);
-		} catch (error) {
-			console.log(`Error: user {userId: ${userId}} not found`);
+	static async getCurrentUser(accessToken) {
+		if (!!accessToken) {
+			try {
+				const userResponse = await authService.check({ accessToken: accessToken });
+				return await userService.getUserBy(accessToken, { username: userResponse.username });
+			} catch (error) {
+				console.log(`Error: user not found`);
+			}
+		} else {
+			return false;
 		}
 	}
 

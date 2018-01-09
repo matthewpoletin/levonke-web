@@ -7,6 +7,7 @@ const bodyParser = require('body-parser');
 const expressValidator = require('express-validator');
 const router = require("./router");
 const config = require("./config");
+const auth = require("./backend/middleware/auth");
 
 const app = express();
 
@@ -21,6 +22,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(expressValidator());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(auth());
 
 router(app);
 
@@ -33,6 +35,8 @@ app.use(function(req, res, next) {
 
 // error handler
 app.use(function(err, req, res, next) {
+	const isAuth = !!req["accessToken"];
+
 	// set locals, only providing error in development
 	res.locals.message = err.message;
 	res.locals.error = req.app.get('env') === 'development' ? err : {};
@@ -41,7 +45,8 @@ app.use(function(err, req, res, next) {
 	res.status(err.status || 500);
 	res.render('error', {
 		projectName: config.project.name,
-		title: "404"
+		isAuth: isAuth,
+		title: "404",
 	});
 });
 

@@ -13,6 +13,7 @@
                         <input name="q" type="text" class="pure-input-rounded">
                     </form>
                 </li>
+                <% if (isAuth) { %>
                 <li class="pure-menu-item">
                     <a href="/users" class="pure-menu-link">
                         <i class="fas fa-user"></i>&nbsp;Users
@@ -68,13 +69,19 @@
                 </li>
                 <li class="pure-menu-item pure-menu-has-children pure-menu-allow-hover">
                     <a id="menuLink1" class="pure-menu-link">
-                        <img width="20px" height="20px" src="https://pp.userapi.com/c626922/v626922567/2429b/IjwJ0ZMRHNo.jpg">
+                        <% if (typeof authUser !== 'undefined') { %>
+                        <img width="20px" height="20px" src="<%= authUser.avatar %>">
+                        <% } else { %>
+                        <img width="20px" height="20px">
+                        <% } %>
                     </a>
                     <ul class="pure-menu-children">
                         <li class="pure-menu-item">
-                            <a class="pure-menu-link" href="/user/matthewpoletin">
+                            <% if (typeof user !== 'undefined') { %>
+                            <a class="pure-menu-link" href="/user/<%= authUser.username %>">
                                 Profile
                             </a>
+                            <% } %>
                         </li>
                         <li class="pure-menu-item">
                             <a class="pure-menu-link" href="/settings">
@@ -88,6 +95,7 @@
                         </li>
                     </ul>
                 </li>
+                <% } %>
             </ul>
         </div>
     </div>

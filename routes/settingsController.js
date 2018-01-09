@@ -1,3 +1,5 @@
+"use strict";
+
 const express = require('express');
 const router = express.Router();
 const config = require("./../config");
@@ -9,13 +11,20 @@ const userService = require("./../backend/userService");
  * Render personal settings page
  */
 router.get('/', async (req, res, next) => {
-	const userResponse = await auth.getCurrentUser();
-	res.render('settings', {
-		projectName: config.project.name,
-		title: config.project.name,
-		user: userResponse,
-		pageType: "main"
-	});
+	const isAuth = !!req["accessToken"];
+	const authUser = await auth.getCurrentUser(req["accessToken"]);
+	try {
+		res.render('settings', {
+			projectName: config.project.name,
+			isAuth: isAuth,
+			authUser: authUser,
+			title: config.project.name,
+			pageType: "main",
+			user: authUser,
+		});
+	} catch (error) {
+		errorHandler(error, req, res, next);
+	}
 });
 
 /**
@@ -36,13 +45,13 @@ router.post('/', async (req, res, next) => {
 	//
 	// if (!errors) {
 	// 	try {
-	// 		const userByUsernameResponse = userService.getUserBy({ username: username });
+	// 		const userByUsernameResponse = userService.getUserBy(req["accessToken"], { username: username });
 	// 		if (userByUsernameResponse.username === username) errors.username = "Username already taken";
 	// 	} catch (error) {
 	// 		console.log("Error: couldn't find user " + username)
 	// 	}
 	// 	try {
-	// 		const userByEmailResponse = userService.getUserBy({ regEmail: email });
+	// 		const userByEmailResponse = userService.getUserBy(req["accessToken"], { regEmail: email });
 	// 		if (userByEmailResponse.email === email) errors.email = "Email already taken";
 	// 	} catch (error) {
 	// 		console.log("Error: couldn't find user " + email);
@@ -60,7 +69,7 @@ router.post('/', async (req, res, next) => {
 			regEmail: req.body.regEmail,
 		};
 		try {
-			await userService.updateUserById(userId, userRequest);
+			await userService.updateUserById(req["accessToken"], userId, userRequest);
 			res.redirect('/settings');
 		} catch (error) {
 			errorHandler(error, req, res, next);
@@ -72,33 +81,55 @@ router.post('/', async (req, res, next) => {
  * Render public settings page
  */
 router.get('/public', async (req, res, next) => {
-	const userResponse = await auth.getCurrentUser();
-	res.render('settings', {
-		projectName: config.project.name,
-		title: config.project.name,
-		user: userResponse,
-		pageType: "public"
-	});
+	const isAuth = !!req["accessToken"];
+	const authUser = await auth.getCurrentUser(req["accessToken"]);
+	try {
+		// const userResponse = await auth.getCurrentUser();
+		res.render('settings', {
+			projectName: config.project.name,
+			isAuth: isAuth,
+			authUser: authUser,
+			title: config.project.name,
+			pageType: "public",
+			user: authUser,
+		});
+	} catch (error) {
+		errorHandler(error, req, res, next);
+	}
 });
 
 router.get('/billing', async (req, res, next) => {
-	const userResponse = await auth.getCurrentUser();
-	res.render('settings', {
-		projectName: config.project.name,
-		title: config.project.name,
-		user: userResponse,
-		pageType: "billing"
-	});
+	const isAuth = !!req["accessToken"];
+	const authUser = await auth.getCurrentUser(req["accessToken"]);
+	try {
+		res.render('settings', {
+			projectName: config.project.name,
+			isAuth: isAuth,
+			authUser: authUser,
+			title: config.project.name,
+			pageType: "billing",
+			user: authUser,
+		});
+	} catch (error) {
+		errorHandler(error, req, res, next);
+	}
 });
 
 router.get('/notifications', async (req, res, next) => {
-	const userResponse = await auth.getCurrentUser();
-	res.render('settings', {
-		projectName: config.project.name,
-		title: config.project.name,
-		user: userResponse,
-		pageType: "notifications"
-	});
+	const isAuth = !!req["accessToken"];
+	const authUser = await auth.getCurrentUser(req["accessToken"]);
+	try {
+		res.render('settings', {
+			projectName: config.project.name,
+			isAuth: isAuth,
+			authUser: authUser,
+			title: config.project.name,
+			pageType: "notifications",
+			user: authUser,
+		});
+	} catch (error) {
+		errorHandler(error, req, res, next);
+	}
 });
 
 module.exports = router;

@@ -9,5 +9,5 @@
     "address": "localhost",
     "port": 8441
   },
-  "noauthcheck": [ "/public/*", "/path/to/loginpage" ]
+  "noAuthCheck": ["/js/*", "/stylesheets/*", "/login", "/join", "/error"]
 }

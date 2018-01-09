@@ -1,6 +1,9 @@
+"use strict";
+
 const express = require('express');
 const router = express.Router();
-const config = require('./../config');
+const config = require("./../config");
+const auth = require("./../auth");
 const userService = require("../backend/userService");
 const teamService = require("../backend/teamService");
 const organizationService = require("../backend/organizationService");
@@ -8,6 +11,8 @@ const projectService = require("../backend/projectService");
 const manufacturerService = require("../backend/manufacturerService");
 
 router.get('/', async (req, res, next) => {
+	const isAuth = !!req["accessToken"];
+	const authUser = await auth.getCurrentUser(req["accessToken"]);
 	const defaultPage = 0;
 	const defaultSize = 2;
 	const page = parseInt(req.query.page, 10) || defaultPage;
@@ -16,7 +21,9 @@ router.get('/', async (req, res, next) => {
 	const query = req.query.q;
 	const data = {
 		projectName: config.project.name,
-		title: "Serach" + " | " + query,
+		isAuth: isAuth,
+		authUser: authUser,
+		title: `Search | ${query}`,
 		query: query,
 		pageInfo: {
 			totalPages: 0
@@ -27,7 +34,7 @@ router.get('/', async (req, res, next) => {
 		case "Teams":
 			try{
 				data.teams = null;
-				const teamsResponse = await teamService.getTeams(page, size, query);
+				const teamsResponse = await teamService.getTeams(req["accessToken"], page, size, query);
 				if (teamsResponse) {
 					data.teams = teamsResponse.content;
 					data.pageInfo.totalPages = teamsResponse.totalPages;
@@ -40,7 +47,7 @@ router.get('/', async (req, res, next) => {
 		case "Organizations":
 			try{
 				data.organizations = null;
-				const organizationsResponse = await organizationService.getOrganizations(page, size, query);
+				const organizationsResponse = await organizationService.getOrganizations(req["accessToken"], page, size, query);
 				if (organizationsResponse) {
 					data.organizations = organizationsResponse.content;
 					data.pageInfo.totalPages = organizationsResponse.totalPages;
@@ -53,7 +60,7 @@ router.get('/', async (req, res, next) => {
 		case "Users":
 			try {
 				data.users = null;
-				const usersResponse = await userService.getUsers(page, size, query);
+				const usersResponse = await userService.getUsers(req["accessToken"], page, size, query);
 				if (usersResponse) {
 					data.users = usersResponse;
 					data.pageInfo.totalPages = usersResponse.totalPages;
@@ -66,7 +73,7 @@ router.get('/', async (req, res, next) => {
 		case "Manufacturers":
 			try {
 				data.manufacturers = null;
-				const usersResponse = await manufacturerService.getManufacturers(page, size, query);
+				const usersResponse = await manufacturerService.getManufacturers(req["accessToken"], page, size, query);
 				if (usersResponse) {
 					data.users = usersResponse;
 					data.pageInfo.totalPages = usersResponse.totalPages;
@@ -79,7 +86,7 @@ router.get('/', async (req, res, next) => {
 		case "projects":
 		case "Projects":
 		default:
-			const projectResponse = await projectService.getProjects(page, size, query);
+			const projectResponse = await projectService.getProjects(req["accessToken"], page, size, query);
 			if (projectResponse) {
 				data.projects = projectResponse.content;
 				data.pageInfo.totalPages = projectResponse.totalPages;

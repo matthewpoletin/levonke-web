@@ -11,13 +11,17 @@ const teamService = require("./../backend/teamService");
  * Render organization main page
  */
 router.get('/:id', async (req, res, next) => {
+	const isAuth = !!req["accessToken"];
+	const authUser = await auth.getCurrentUser(req["accessToken"]);
 	const organizationId = parseInt(req.params.id, 10);
-	const organizationResponse = await organizationService.getOrganizationById(organizationId);
+	const organizationResponse = await organizationService.getOrganizationById(req["accessToken"], organizationId);
 	const ownerId = parseInt(organizationResponse.ownerId, 10);
 	let ownerResponse = null;
-	if (ownerId) ownerResponse = await userService.getUserById(ownerId);
+	if (ownerId) ownerResponse = await userService.getUserById(req["accessToken"], ownerId);
 	res.render('organization', {
 		projectName: config.project.name,
+		isAuth: isAuth,
+		authUser: authUser,
 		title: config.project.name + " | " + organizationResponse.name,
 		pageType: "main",
 		organization: organizationResponse,
@@ -29,19 +33,23 @@ router.get('/:id', async (req, res, next) => {
  * Render all teams of organization
  */
 router.get('/:id/teams', async (req, res, next) => {
+	const isAuth = !!req["accessToken"];
+	const authUser = await auth.getCurrentUser(req["accessToken"]);
 	const organizationId = parseInt(req.params.id, 10);
-	const organizationResponse = await organizationService.getOrganizationById(organizationId);
+	const organizationResponse = await organizationService.getOrganizationById(req["accessToken"], organizationId);
 	const ownerId = parseInt(organizationResponse.ownerId, 10);
 	let ownerResponse = null;
-	if (ownerId) ownerResponse = await userService.getUserById(ownerId);
-	const teamsResponse = await organizationService.getTeamsOfOrganization(organizationId, null, null);
+	if (ownerId) ownerResponse = await userService.getUserById(req["accessToken"], ownerId);
+	const teamsResponse = await organizationService.getTeamsOfOrganization(req["accessToken"], organizationId, null, null);
 	res.render('organization', {
 		projectName: config.project.name,
-		title: config.project.name + " | " + organizationResponse.name,
+		isAuth: isAuth,
+		authUser: authUser,
+		title: `${config.project.name} | ${organizationResponse.name}`,
 		pageType: "teams",
 		organization: organizationResponse,
 		owner: ownerResponse,
-		teams: teamsResponse.content
+		teams: teamsResponse.content,
 	});
 });
 
@@ -49,10 +57,14 @@ router.get('/:id/teams', async (req, res, next) => {
  * Render create new team of organization page
  */
 router.get('/:id/teams/new', async (req, res, next) => {
+	const isAuth = !!req["accessToken"];
+	const authUser = await auth.getCurrentUser(req["accessToken"]);
 	const organizationId = parseInt(req.params.id, 10);
-	const organizationResponse = await organizationService.getOrganizationById(organizationId);
+	const organizationResponse = await organizationService.getOrganizationById(req["accessToken"], organizationId);
 	res.render('organization', {
 		projectName: config.project.name,
+		isAuth: isAuth,
+		authUser: authUser,
 		title: config.project.name + " | " + organizationResponse.name,
 		pageType: "teams-new",
 		organization: organizationResponse,
@@ -67,7 +79,7 @@ router.post('/:id/teams/new', async (req, res, next) => {
 
 	const organizationId = parseInt(req.params.id, 10);
 	try {
-		const organizationResponse = await organizationService.getOrganizationById(organizationId);
+		const organizationResponse = await organizationService.getOrganizationById(req["accessToken"], organizationId);
 	} catch (error) {
 		errorHandler(error, req, res, next);
 	}
@@ -97,7 +109,7 @@ router.post('/:id/teams/new', async (req, res, next) => {
 			const ownerResponse = auth.getCurrentUser();
 			if (ownerResponse) teamRequest.ownerId = ownerResponse.id;
 			try {
-				const teamResponse = await teamService.createTeam(teamRequest);
+				const teamResponse = await teamService.createTeam(req["accessToken"], teamRequest);
 				res.redirect(`/team/${teamResponse.id}/teams`);
 			} catch (error) {
 				errorHandler(error, req, res, next);
@@ -112,11 +124,15 @@ router.post('/:id/teams/new', async (req, res, next) => {
  * Render organization settings page
  */
 router.get('/:id/settings', async (req, res, next) => {
+	const isAuth = !!req["accessToken"];
+	const authUser = await auth.getCurrentUser(req["accessToken"]);
 	const organizationId = parseInt(req.params.id, 10);
-	const organizationResponse = await organizationService.getOrganizationById(organizationId);
+	const organizationResponse = await organizationService.getOrganizationById(req["accessToken"], organizationId);
 	res.render('organization', {
 		projectName: config.project.name,
-		title: config.project.name + " | " + organizationResponse.name,
+		isAuth: isAuth,
+		authUser: authUser,
+		title: `${config.project.name} | ${organizationResponse.name}`,
 		pageType: "settings",
 		organization: organizationResponse,
 	});

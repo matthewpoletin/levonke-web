@@ -1,3 +1,5 @@
+"use strict";
+
 const rp = require('request-promise');
 const config = require("./../config");
 const getOptions = require("./../options");
@@ -6,43 +8,43 @@ const apiService = `http://${config.api.address}:${config.api.port}`;
 
 class teamService {
 
-	static getTeams(page, size, name) {
-		const options = getOptions(apiService, `/teams`, { page: page, size: size, name: name }, null);
+	static getTeams(accessToken, page, size, name) {
+		const options = getOptions(accessToken, apiService, `/teams`, { page: page, size: size, name: name }, null);
 		rp.get(options);
 	}
 
-	static createTeam(teamRequest) {
-		const options = getOptions(apiService, `/teams`, null, teamRequest);
+	static createTeam(accessToken, teamRequest) {
+		const options = getOptions(accessToken, apiService, `/teams`, null, teamRequest);
 		return rp.post(options);
 	}
 
-	static getTeamById(id) {
-		const options = getOptions(apiService, `/teams/${id}`, null, null);
+	static getTeamById(accessToken, id) {
+		const options = getOptions(accessToken, apiService, `/teams/${id}`, null, null);
 		return rp.get(options);
 	}
 
-	static getTeamBy(name) {
-		const options = getOptions(apiService, `/teams/by`, { name: name }, null);
+	static getTeamBy(accessToken, name) {
+		const options = getOptions(accessToken, apiService, `/teams/by`, { name: name }, null);
 		return rp.get(options);
 	}
 
-	static updateTeamById(id, teamRequest) {
-		const options = getOptions(apiService, `/teams/${id}`, teamRequest, null);
+	static updateTeamById(accessToken, id, teamRequest) {
+		const options = getOptions(accessToken, apiService, `/teams/${id}`, teamRequest, null);
 		return rp.patch(options);
 	}
 
-	static deleteTeamById(id) {
-		const options = getOptions(apiService, `/teams/${id}`, null, null);
+	static deleteTeamById(accessToken, id) {
+		const options = getOptions(accessToken, apiService, `/teams/${id}`, null, null);
 		return rp.delete(options);
 	}
 
-	static getUsersOfTeam(id) {
-		const options = getOptions(apiService, `/teams/${id}/users`, null, null);
+	static getUsersOfTeam(accessToken, id) {
+		const options = getOptions(accessToken, apiService, `/teams/${id}/users`, null, null);
 		return rp.get(options);
 	}
 
-	static getProjectsOfTeam(id) {
-		const options = getOptions(apiService, `/teams/${id}/projects`, null, null);
+	static getProjectsOfTeam(accessToken, id) {
+		const options = getOptions(accessToken, apiService, `/teams/${id}/projects`, null, null);
 		return rp.get(options);
 	}
 

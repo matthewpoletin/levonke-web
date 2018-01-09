@@ -1,3 +1,5 @@
+"use strict";
+
 const rp = require('request-promise');
 const config = require("./../config");
 const getOptions = require("./../options");
@@ -6,38 +8,38 @@ const apiService = `http://${config.api.address}:${config.api.port}`;
 
 class organizationService {
 
-	static getOrganizations(page, size, name) {
-		const options = getOptions(apiService, `/organizations`, { page: page, size: size, name: name }, null);
+	static getOrganizations(accessToken, page, size, name) {
+		const options = getOptions(accessToken, apiService, `/organizations`, { page: page, size: size, name: name }, null);
 		return rp.get(options);
 	}
 
-	static createOrganization(componentRequest) {
-		const options = getOptions(apiService, `/organizations`, null, componentRequest);
+	static createOrganization(accessToken, componentRequest) {
+		const options = getOptions(accessToken, apiService, `/organizations`, null, componentRequest);
 		return rp.post(options);
 	}
 
-	static getOrganizationById(id) {
-		const options = getOptions(apiService, `/organizations/${id}`, null, null);
+	static getOrganizationById(accessToken, id) {
+		const options = getOptions(accessToken, apiService, `/organizations/${id}`, null, null);
 		return rp.get(options);
 	}
 
-	static getOrganizationByName(name) {
-		const options = getOptions(apiService, `/organizations/name/${name}`, null, null);
+	static getOrganizationByName(accessToken, name) {
+		const options = getOptions(accessToken, apiService, `/organizations/name/${name}`, null, null);
 		return rp.get(options);
 	}
 
-	static updateOrganizationById(id, organizationRequest) {
-		const options = getOptions(apiService, `/organizations/${id}`, null, organizationRequest);
+	static updateOrganizationById(accessToken, id, organizationRequest) {
+		const options = getOptions(accessToken, apiService, `/organizations/${id}`, null, organizationRequest);
 		return rp.patch(options);
 	}
 
-	static deleteOrganizationById(id) {
-		const options = getOptions(apiService, `/organizations/${id}`, null, null);
+	static deleteOrganizationById(accessToken, id) {
+		const options = getOptions(accessToken, apiService, `/organizations/${id}`, null, null);
 		return rp.delete(options);
 	}
 
-	static getTeamsOfOrganization(id, page, size) {
-		const options = getOptions(apiService, `/organizations/${id}/teams`, { page: page, size: size }, null);
+	static getTeamsOfOrganization(accessToken, id, page, size) {
+		const options = getOptions(accessToken, apiService, `/organizations/${id}/teams`, { page: page, size: size }, null);
 		return rp.get(options);
 	}
 
