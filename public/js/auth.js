@@ -49,7 +49,7 @@ function updateButton() {
 }
 
 submitButton.addEventListener("click", (e) => {
-	// e.preventDefault();
+	e.preventDefault();
 
 	const username = usernameInput.value;
 	const password = passwordInput.value;
@@ -67,7 +67,7 @@ submitButton.addEventListener("click", (e) => {
 						name: "Access-Token",
 						value: credentials["accessToken"],
                     });
-					// window.location.replace(`/user/${username}`);
+					window.location.replace(`/user/${username}`);
 				} catch (error) {
 					console.error("Error on ApiLogin, responseText: " + req.responseText);
 					console.error(error);

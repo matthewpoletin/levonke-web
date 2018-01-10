@@ -4,11 +4,15 @@ const config = require("./../config");
 
 router.get('/', function(req, res, next) {
 	const isAuth = !!req["accessToken"];
-	res.render('login', {
-		projectName: config.project.name,
-		title: config.project.name,
-		isAuth: isAuth
-	});
+	if (!isAuth) {
+		res.render('login', {
+			projectName: config.project.name,
+			title: config.project.name,
+			isAuth: isAuth
+		});
+	} else {
+		res.redirect("/");
+	}
 });
 
 router.post('/', function (req, res, next) {

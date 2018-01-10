@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <%- include('head', {}); %>
+    </head>
+    <body>
+        <div class="content">
+            <h3><%= projectName %> login for <%= appName %></h3>
+            <form class="pure-form pure-form-stacked" method="post" accept-charset="UTF-8" action="/oauth/authorize" id="join-form">
+                <fieldset>
+                    <legend>Sign in</legend>
+
+                    <label for="username">Username</label>
+                    <input id="username" name="username" type="text" placeholder="Username">
+                    <span class="pure-form-message">This is a required field.</span>
+
+                    <label for="password">Password</label>
+                    <input id="password" name="password" type="password" placeholder="Password">
+                    <span class="pure-form-message">This is a required field.</span>
+
+                    <input id="redirectUri" name="redirectUri" type="text" value="<%= redirectUri %>" hidden>
+                    <input id="appId" name="appId" type="text" value="<%= appId %>" hidden>
+
+                    <button id="submit" type="submit" class="pure-button pure-button-primary">Sign in</button>
+                </fieldset>
+            </form>
+        </div>
+    </body>
+</html>

@@ -10,16 +10,16 @@ const userService = require("./../backend/userService");
  */
 router.get('/', (req, res, next) => {
 	const isAuth = !!req["accessToken"];
-	if (isAuth) {
+	if (!isAuth) {
 		const data = {
 			projectName: config.project.name,
 			title: config.project.name + " | Join",
 			pageType: "main",
-			isAuth
+			isAuth: isAuth,
 		};
 		res.render('join', data);
 	} else {
-		// res.redirect("/");
+		res.redirect("/");
 	}
 });
 

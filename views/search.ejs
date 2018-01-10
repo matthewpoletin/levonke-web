@@ -91,7 +91,7 @@
                 <div class="users">
                     <% users.content.forEach((user) => { %>
                     <div class="pure-g user">
-                        <div class="pure-u-1-3"><a href="/user/<%=user.username%>"><img width="25px" height="25px"></a></div>
+                        <div class="pure-u-1-3"><a href="/user/<%=user.username%>"><img width="25px" height="25px" src="<%= user.avatar %>"></a></div>
                         <div class="pure-u-2-3"><a href="/user/<%=user.username%>"><%=user.username%></a></div>
                     </div>
                     <% }); %>
